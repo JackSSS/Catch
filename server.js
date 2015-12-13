@@ -13,9 +13,12 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(express.static(__dirname + '/www'));
+
 //app.use('/api', catchRouter);
 
 var port = process.env.PORT || 3000;
+
 app.listen(port, function() {
   console.log('server up on port: ' + port);
 });

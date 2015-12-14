@@ -5,6 +5,7 @@ var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
+var jshint = require('gulp-jshint');
 var sh = require('shelljs');
 
 var paths = {
@@ -65,3 +66,5 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+gulp.task('test:all', ['test:jshint']);

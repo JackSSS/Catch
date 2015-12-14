@@ -15,6 +15,20 @@ var paths = {
 
 gulp.task('default', ['sass']);
 
+gulp.task('test:jshint', function() {
+  return gulp.src(paths.js)
+    .pipe(jshint({
+      node: true,
+      globals: {
+        describe: true,
+        it: true,
+        before: true,
+        after: true
+      }
+    }))
+    .pipe(jshint.reporter('jshint-stylish'));
+});
+
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())

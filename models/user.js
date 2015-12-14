@@ -6,4 +6,4 @@ var userSchema = mongoose.Schema({
   location: Number
 });
 
-var User = module.exports.User = mongoose.model('User', noteSchema);
+var User = module.exports.User = mongoose.model('User', userSchema);

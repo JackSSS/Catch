@@ -41,16 +41,57 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
+.controller('ContactsController', ['$http', '$ionicModal', function($http, $ionicModal){
+    var server = 'http://' + SERVER_ADDRESS + '/api/contacts';
+    var handleError = function(res) {
+      console.log(res);
+    };
+    this.contacts = [];
+    this.orig = {};
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+    this.getAll = function() {
+      $http.get(server)
+        .then(function(res){
+          this.contacts = res.data
+        }.bind(this), function(res){
+          console.log(res);
+        }.bind(this), handleError)
+    }.bind(this);
+
+    this.createContact = function(contact) {
+      $http.post(server, contact)
+      .then(function(res){
+        this.contacts.push(res.data);
+        this.newContact = null;
+      }.bind(this), handleError)
+    }.bind(this);
+
+    this.deleteContact = function(contact) {
+      $http.delete(server + '/' + contact._id, contact)
+        .then(function(res){
+          this.contacts.splice(this.contacts.indexOf(contact), 1);
+        }.bind(this), handleError)
+    }.bind(this);
+
+    this.updateContact = function(contact) {
+      contact.editing = false;
+      $http.put(server + '/' + contact._id, contact)
+        .then(function(res){
+          // console.log('Update/PUT complete.');
+        }.bind(this), handleError)
+    }.bind(this);
+
+    this.edit = function(contact) {
+      this.orig = angular.copy(contact);
+      contact.editing = true;
+    }.bind(this);
+
+    this.cancelEdit = function(contact) {
+        angular.copy(this.orig, contact);
+        contact.editing = false;
+    }.bind(this);
+
+  }])
+
+.controller('ContactCtrl', function($scope, $stateParams) {
 });

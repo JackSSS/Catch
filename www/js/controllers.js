@@ -15,7 +15,7 @@ angular.module('catch.controllers', [])
   $scope.errors = [];
 
   // Perform the login action when the user submits the login form
-  $scope.doLogin = function(isValid) {
+  $scope.doLogin = function() {
     $scope.errors = [];
 
     if (!($scope.loginData.username && $scope.loginData.password))

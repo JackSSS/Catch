@@ -6,6 +6,7 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var jshint = require('gulp-jshint');
+var mocha = require('gulp-mocha');
 var sh = require('shelljs');
 
 var paths = {
@@ -30,6 +31,11 @@ gulp.task('test:jshint', function() {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
+gulp.task('test:mocha', function() {
+  return gulp.src('./test/test.js')
+    .pipe(mocha({reporter: 'nyan'}));
+});
+
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
@@ -43,7 +49,7 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('watch', function() {
+gulp.task('watch:sass', function() {
   gulp.watch(paths.sass, ['sass']);
 });
 
@@ -67,4 +73,5 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-gulp.task('test:all', ['test:jshint']);
+gulp.task('test:all', ['test:jshint', 'test:mocha']);
+

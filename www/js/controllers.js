@@ -12,10 +12,15 @@ angular.module('catch.controllers', [])
   // Form data for the login modal
   $scope.loginData = {};
   $scope.signupData = {};
-  $scope.errors = ['username not found', 'password incorrect'];
+  $scope.errors = [];
 
   // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
+  $scope.doLogin = function(isValid) {
+    $scope.errors = [];
+
+    if (!($scope.loginData.username && $scope.loginData.password))
+      return $scope.errors.push('Please enter username and password');
+
     console.log('Doing login', $scope.loginData);
     $ionicLoading.show({
       template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Logging in...'
@@ -29,6 +34,14 @@ angular.module('catch.controllers', [])
   };
 
   $scope.doSignup = function() {
+    $scope.errors = [];
+
+    if (!($scope.signupData.username && $scope.signupData.password))
+      return $scope.errors.push('Please enter username and passwords.');
+
+    if ($scope.signupData.password !== $scope.signupData.confirmPassword)
+      return $scope.errors.push('Passwords do not match.');
+
     console.log('Doing signup', $scope.loginData);
     $ionicLoading.show({
       template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Signing up...'

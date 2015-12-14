@@ -6,7 +6,7 @@ var handleServerError = require(__dirname + '/../lib/handle_server_error');
 var userRouter = module.exports = exports = express.Router();
 
 usersRouter.get('/users', function(req, res) {
-  Note.find({}, function(err, data) {
+  User.find({}, function(err, data) {
     if (err) return handleServerError(err, res);
     res.json(data);
   });

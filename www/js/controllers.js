@@ -1,6 +1,6 @@
-angular.module('starter.controllers', [])
+angular.module('catch.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $timeout, $location, $ionicLoading) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -11,87 +11,19 @@ angular.module('starter.controllers', [])
 
   // Form data for the login modal
   $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
+  $scope.signupData = {};
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
-
+    $ionicLoading.show({
+      template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Signing in...'
+    });
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
     $timeout(function() {
-      $scope.closeLogin();
+      $ionicLoading.hide();
+      $location.path('/home/panic');
     }, 1000);
   };
-})
-
-.controller('ContactsController', ['$http', '$ionicModal', function($http, $ionicModal){
-    var server = 'http://' + SERVER_ADDRESS + '/api/contacts';
-    var handleError = function(res) {
-      console.log(res);
-    };
-    this.contacts = [];
-    this.orig = {};
-
-    this.getAll = function() {
-      $http.get(server)
-        .then(function(res){
-          this.contacts = res.data
-        }.bind(this), function(res){
-          console.log(res);
-        }.bind(this), handleError)
-    }.bind(this);
-
-    this.createContact = function(contact) {
-      $http.post(server, contact)
-      .then(function(res){
-        this.contacts.push(res.data);
-        this.newContact = null;
-      }.bind(this), handleError)
-    }.bind(this);
-
-    this.deleteContact = function(contact) {
-      $http.delete(server + '/' + contact._id, contact)
-        .then(function(res){
-          this.contacts.splice(this.contacts.indexOf(contact), 1);
-        }.bind(this), handleError)
-    }.bind(this);
-
-    this.updateContact = function(contact) {
-      contact.editing = false;
-      $http.put(server + '/' + contact._id, contact)
-        .then(function(res){
-          // console.log('Update/PUT complete.');
-        }.bind(this), handleError)
-    }.bind(this);
-
-    this.edit = function(contact) {
-      this.orig = angular.copy(contact);
-      contact.editing = true;
-    }.bind(this);
-
-    this.cancelEdit = function(contact) {
-        angular.copy(this.orig, contact);
-        contact.editing = false;
-    }.bind(this);
-
-  }])
-
-.controller('ContactCtrl', function($scope, $stateParams) {
 });

@@ -26,4 +26,4 @@ angular.module('catch.controllers', [])
       $location.path('/home/panic');
     }, 1000);
   };
-})
+});

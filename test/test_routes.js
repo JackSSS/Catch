@@ -5,7 +5,7 @@ var expect = chai.expect;
 var should = chai.should();
 
 process.env.MONGOLAB_URI = 'mongodb://localhost/user_test';
-require(__dirname + '/../server');
+var server = require(__dirname + '/../server');
 var mongoose = require('mongoose');
 var User = require(__dirname + '/../models/user');
 
@@ -28,6 +28,7 @@ describe('user routes', function() {
     chai.request('localhost:3000')
       .get('/api/users')
       .end(function(err, res) {
+        res.should.have.status(200);
         expect(err).to.eql(null);
         expect(Array.isArray(res.body)).to.eql(true);
         done();

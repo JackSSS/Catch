@@ -87882,6 +87882,10 @@
 	      expect($scope.user).toEqual({});
 	    });
 
+	    it('should log out', function() {
+	      $scope.logout();
+	      expect($location.path).toHaveBeenCalledWith('/auth');
+	    });
 	  });
 	});
 
@@ -88034,6 +88038,11 @@
 	      // code if using a login system
 	      $location.path('/home/panic');
 	      $ionicLoading.hide();
+	    };
+
+	    $scope.logout = function() {
+
+	      $location.path('/auth');
 	    };
 	  });
 	};

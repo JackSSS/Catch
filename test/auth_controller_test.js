@@ -56,5 +56,9 @@ describe('AuthCtrl', function() {
       expect($scope.user).toEqual({});
     });
 
+    it('should log out', function() {
+      $scope.logout();
+      expect($location.path).toHaveBeenCalledWith('/auth');
+    });
   });
 });

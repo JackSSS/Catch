@@ -1,1 +1,7 @@
 /* Empty. Add your own CSS if you like */
+.alert {
+  color: #ef473a;
+  border: 1px #ef473a solid;
+  margin-left: 5px;
+  margin-right: 5px;
+}

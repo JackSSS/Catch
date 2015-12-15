@@ -11,11 +11,11 @@
           <input type="password" ng-model="loginData.password">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
+          <button class="button button-block button-stable" type="submit">Log in</button>
         </label>
       </div>
 
-      <div error-list errors="errors"></div>
+      <div error-list ng-if="errors.length > 0" errors="errors"></div>
     </form>
   </ion-content>
 </ion-view>

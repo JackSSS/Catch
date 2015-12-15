@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var User = require(__dirname + '/../models/user').User;
 var handleServerError = require(__dirname + '/../lib/handle_server_error');
 
-var userRouter = module.exports = exports = express.Router();
+var usersRouter = module.exports = exports = express.Router();
 
 usersRouter.get('/users', function(req, res) {
   User.find({}, function(err, data) {

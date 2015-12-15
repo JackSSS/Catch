@@ -12,7 +12,7 @@ var webpack = require('webpack-stream');
 var paths = {
   sass: ['./scss/**/*.scss'],
   html: ['./www/**/*.html'],
-  js: ['./www/**/*.js']
+  js: ['./www/js/**/*.js']
 };
 
 gulp.task('build', function() {
@@ -54,7 +54,17 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('watch', function() {
+// TODO: Add html packing task
+//
+// gulp.task('watch:html', function() {
+//   gulp.watch(paths.html, [''])
+// });
+
+gulp.task('watch:js', function() {
+  gulp.watch(paths.js, ['build']);
+});
+
+gulp.task('watch:sass', function() {
   gulp.watch(paths.sass, ['sass']);
 });
 
@@ -79,3 +89,4 @@ gulp.task('git-check', function(done) {
 });
 
 gulp.task('test:all', ['test:jshint']);
+gulp.task('default', ['build']);

@@ -10,12 +10,7 @@ var mongoose = require('mongoose');
 var User = require(__dirname + '/../models/user');
 
 describe('user routes', function() {
-  after(function(done) {
-    mongoose.connection.db.dropDatabase(function() {
-      done();
-    });
-  });
-
+    
   it('should be able to create a user', function(done) {
     var userData = {name: 'test user'};
     chai.request('localhost:3000')
@@ -39,6 +34,15 @@ describe('user routes', function() {
       });
   });
 
+  after(function(done) {
+    mongoose.connection.db.dropDatabase(function() {
+      console.log('test db dropped');
+    });
+    mongoose.connection.close(function() {
+      console.log('mongo connection closed');
+      done();
+    });
+  });
 // describe('New User', function() {
 //   beforeEach(function(done) {
 //     (new User({name: 'test user'})).save(function(err, data) {

@@ -1,0 +1,22 @@
+<ion-view view-title="Catch">
+  <ion-content>
+    <form ng-submit="authenticate(authData)">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="authData.username">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="authData.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-calm" type="button">{{buttonText}}</button>
+          <button class="button button-block button-positive" type="submit">Submit</button>
+        </label>
+      </div>
+
+      <div error-list errors="authErrors"></div>
+    </form>
+  </ion-content>
+</ion-view>

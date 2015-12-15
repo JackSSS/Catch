@@ -6,8 +6,10 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var jshint = require('gulp-jshint');
+var gulpMocha = require('gulp-mocha');
 var sh = require('shelljs');
 var webpack = require('webpack-stream');
+var testFiles = ['./test/test.js'];
 
 var paths = {
   sass: ['./scss/**/*.scss'],
@@ -65,6 +67,12 @@ gulp.task('install', ['git-check'], function() {
     });
 });
 
+gulp.task('test:mocha', function() {
+  return gulp.src(testFiles, {read: false})
+    .pipe(gulpMocha({reporter: 'landing'}));
+});
+
+
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {
     console.log(
@@ -78,4 +86,8 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-gulp.task('test:all', ['test:jshint']);
+gulp.task('test:all', ['test:jshint', 'test:mocha']);
+
+gulp.doneCallback = function(err) {
+  process.exit(err ? 1 : 0);
+};

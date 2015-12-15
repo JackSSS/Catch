@@ -9,12 +9,12 @@ var jshint = require('gulp-jshint');
 var gulpMocha = require('gulp-mocha');
 var sh = require('shelljs');
 var webpack = require('webpack-stream');
-var testFiles = ['./test/test.js'];
 
 var paths = {
   sass: ['./scss/**/*.scss'],
   html: ['./www/**/*.html'],
-  js: ['./www/js/**/*.js']
+  js: ['./www/js/**/*.js'],
+  test: ['./test/**/*.js']
 };
 
 gulp.task('build', function() {
@@ -27,7 +27,7 @@ gulp.task('build', function() {
     .pipe(gulp.dest('./www/js/'));
 });
 
-gulp.task('build-test', function() {
+gulp.task('build:test', function() {
   return gulp.src('test/test_entry.js')
     .pipe(webpack({
       output: {
@@ -35,20 +35,6 @@ gulp.task('build-test', function() {
       }
     }))
     .pipe(gulp.dest('test/'));
-});
-
-gulp.task('test:jshint', function() {
-  return gulp.src(paths.js)
-    .pipe(jshint({
-      node: true,
-      globals: {
-        describe: true,
-        it: true,
-        before: true,
-        after: true
-      }
-    }))
-    .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('sass', function(done) {
@@ -85,11 +71,24 @@ gulp.task('install', ['git-check'], function() {
     });
 });
 
-gulp.task('test:mocha', function() {
-  return gulp.src(testFiles, {read: false})
-    .pipe(gulpMocha({reporter: 'landing'}));
+gulp.task('test:jshint', function() {
+  return gulp.src(paths.js)
+    .pipe(jshint({
+      node: true,
+      globals: {
+        describe: true,
+        it: true,
+        before: true,
+        after: true
+      }
+    }))
+    .pipe(jshint.reporter('jshint-stylish'));
 });
 
+gulp.task('test:mocha', function() {
+  return gulp.src(paths.test, {read: false})
+    .pipe(gulpMocha({reporter: 'landing'}));
+});
 
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {
@@ -104,8 +103,9 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-gulp.task('default', ['build']);
-gulp.task('test:all', ['test:jshint', 'test:mocha']);
+gulp.task('default', ['install', 'build']);
+gulp.task('test:all', ['build', 'build:test', 'test:jshint', 'test:mocha']);
+gulp.task('watch:all', ['watch:sass', 'watch:js', 'watch:html']);
 
 gulp.doneCallback = function(err) {
   process.exit(err ? 1 : 0);

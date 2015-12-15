@@ -6,3 +6,4 @@ platforms/
 plugins/
 build/
 www/js/bundle.js
+test/test_bundle.js

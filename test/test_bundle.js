@@ -87853,38 +87853,35 @@
 	      $ControllerConstructor('AuthCtrl', {$scope: $scope, $location: $location});
 	    }));
 
-	    it('should login', function() {
-	      $scope.loginData = {
+	    it('should authenticate', function() {
+	      $scope.user = {
 	        username: 'test',
 	        password: 'testpassword'
 	      };
-	      $scope.doLogin();
+	      $scope.authenticate($scope.user);
 	      expect($location.path).toHaveBeenCalledWith('/home/panic');
-	      expect($scope.errors.length).toBe(0);
+	      expect($scope.authErrors.length).toBe(0);
 	    });
 
-	    it('should reject incomplete login', function() {
-	      $scope.doLogin();
-	      expect($scope.errors.length).toBe(1);
+	    it('should reject incomplete authentication', function() {
+	      $scope.authenticate($scope.user);
+	      expect($scope.authErrors.length).toBe(1);
 	      expect($location.path).not.toHaveBeenCalled();
 	    });
 
-	    it('should sign up a user', function() {
-	      $scope.signupData = {
+	    it('should toggle signup', function() {
+	      $scope.user = {
 	        username: 'test2',
 	        password: 'testpassword2',
 	        confirmPassword: 'testpassword2'
 	      };
-	      $scope.doSignup();
-	      expect($location.path).toHaveBeenCalledWith('/home/panic');
-	      expect($scope.errors.length).toBe(0);
+	      $scope.signup = true;
+	      $scope.toggleSignup();
+	      expect($scope.signup).toBe(false);
+	      expect($scope.authErrors.length).toBe(0);
+	      expect($scope.user).toEqual({});
 	    });
 
-	    it('should reject incomplete signup', function() {
-	      $scope.doSignup();
-	      expect($scope.errors.length).toBe(1);
-	      expect($location.path).not.toHaveBeenCalled();
-	    });
 	  });
 	});
 

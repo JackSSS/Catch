@@ -27,6 +27,16 @@ gulp.task('build', function() {
     .pipe(gulp.dest('./www/js/'));
 });
 
+gulp.task('build-test', function() {
+  return gulp.src('test/test_entry.js')
+    .pipe(webpack({
+      output: {
+        filename: 'test_bundle.js'
+      }
+    }))
+    .pipe(gulp.dest('test/'));
+});
+
 gulp.task('default', ['sass']);
 
 gulp.task('test:jshint', function() {

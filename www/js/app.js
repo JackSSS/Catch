@@ -61,7 +61,8 @@ catchApp.config(function($stateProvider, $urlRouterProvider) {
       url: '/panic',
       views: {
         'homeMenuContent': {
-          templateUrl: 'templates/panic.html'
+          templateUrl: 'templates/panic.html',
+          controller: 'PanicCtrl'
         }
       }
     })

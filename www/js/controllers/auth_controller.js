@@ -40,5 +40,10 @@ module.exports = function(app) {
       $location.path('/home/panic');
       $ionicLoading.hide();
     };
+
+    $scope.logout = function() {
+
+      $location.path('/auth');
+    };
   });
 };

@@ -25,29 +25,9 @@ catchApp.config(function($stateProvider, $urlRouterProvider) {
 
   // routing for login and signup
   $stateProvider
-    .state('app', {
-      url: '/app',
-      abstract: true,
-      templateUrl: 'templates/menu.html',
-      controller: 'AuthCtrl'
-    })
-
-    .state('app.login', {
-      url: '/login',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/login.html'
-        }
-      }
-    })
-
-    .state('app.signup', {
-      url: '/signup',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/signup.html'
-        }
-      }
+    .state('auth', {
+      url: '/auth',
+      templateUrl: 'templates/auth_form.html',
     });
 
   // routing for home
@@ -104,5 +84,5 @@ catchApp.config(function($stateProvider, $urlRouterProvider) {
       }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/login');
+  $urlRouterProvider.otherwise('/auth');
 });

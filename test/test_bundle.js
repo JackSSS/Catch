@@ -87853,37 +87853,38 @@
 	      $ControllerConstructor('AuthCtrl', {$scope: $scope, $location: $location});
 	    }));
 
-	    it('should login', function() {
-	      $scope.loginData = {
+	    it('should authenticate', function() {
+	      $scope.user = {
 	        username: 'test',
 	        password: 'testpassword'
 	      };
-	      $scope.doLogin();
+	      $scope.authenticate($scope.user);
 	      expect($location.path).toHaveBeenCalledWith('/home/panic');
-	      expect($scope.errors.length).toBe(0);
+	      expect($scope.authErrors.length).toBe(0);
 	    });
 
-	    it('should reject incomplete login', function() {
-	      $scope.doLogin();
-	      expect($scope.errors.length).toBe(1);
+	    it('should reject incomplete authentication', function() {
+	      $scope.authenticate($scope.user);
+	      expect($scope.authErrors.length).toBe(1);
 	      expect($location.path).not.toHaveBeenCalled();
 	    });
 
-	    it('should sign up a user', function() {
-	      $scope.signupData = {
+	    it('should toggle signup', function() {
+	      $scope.user = {
 	        username: 'test2',
 	        password: 'testpassword2',
 	        confirmPassword: 'testpassword2'
 	      };
-	      $scope.doSignup();
-	      expect($location.path).toHaveBeenCalledWith('/home/panic');
-	      expect($scope.errors.length).toBe(0);
+	      $scope.signup = true;
+	      $scope.toggleSignup();
+	      expect($scope.signup).toBe(false);
+	      expect($scope.authErrors.length).toBe(0);
+	      expect($scope.user).toEqual({});
 	    });
 
-	    it('should reject incomplete signup', function() {
-	      $scope.doSignup();
-	      expect($scope.errors.length).toBe(1);
-	      expect($location.path).not.toHaveBeenCalled();
+	    it('should log out', function() {
+	      $scope.logout();
+	      expect($location.path).toHaveBeenCalledWith('/auth');
 	    });
 	  });
 	});
@@ -87920,29 +87921,9 @@
 
 	  // routing for login and signup
 	  $stateProvider
-	    .state('app', {
-	      url: '/app',
-	      abstract: true,
-	      templateUrl: 'templates/menu.html',
-	      controller: 'AuthCtrl'
-	    })
-
-	    .state('app.login', {
-	      url: '/login',
-	      views: {
-	        'menuContent': {
-	          templateUrl: 'templates/login.html'
-	        }
-	      }
-	    })
-
-	    .state('app.signup', {
-	      url: '/signup',
-	      views: {
-	        'menuContent': {
-	          templateUrl: 'templates/signup.html'
-	        }
-	      }
+	    .state('auth', {
+	      url: '/auth',
+	      templateUrl: 'templates/auth_form.html',
 	    });
 
 	  // routing for home
@@ -87999,7 +87980,7 @@
 	      }
 	    });
 	  // if none of the above states are matched, use this as the fallback
-	  $urlRouterProvider.otherwise('/app/login');
+	  $urlRouterProvider.otherwise('/auth');
 	});
 
 
@@ -88028,38 +88009,28 @@
 	    //});
 
 	    // Form data for the login modal
-	    $scope.loginData = {};
-	    $scope.signupData = {};
-	    $scope.errors = [];
+	    $scope.authErrors = [];
+	    $scope.user = {};
+	    $scope.signup = true;
 
-	    // Perform the login action when the user submits the login form
-	    $scope.doLogin = function() {
-	      $scope.errors = [];
+	    $scope.toggleSignup = function() {
 
-	      if (!($scope.loginData.username && $scope.loginData.password))
-	        return $scope.errors.push('Please enter username and password');
+	      if ($scope.signup)
+	        $scope.signup = false;
+	      else
+	        $scope.signup = true;
 
-	      console.log('Doing login', $scope.loginData);
-	      $ionicLoading.show({
-	        template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Logging in...'
-	      });
-	      // Simulate a login delay. Remove this and replace with your login
-	      // code if using a login system
-
-	      $location.path('/home/panic');
-	      $ionicLoading.hide();
+	      $scope.authErrors = [];
+	      $scope.user = {};
 	    };
 
-	    $scope.doSignup = function() {
-	      $scope.errors = [];
+	    $scope.authenticate = function(user) {
+	      $scope.authErrors = [];
 
-	      if (!($scope.signupData.username && $scope.signupData.password))
-	        return $scope.errors.push('Please enter username and passwords.');
+	      if (!(user.username && user.password))
+	        return $scope.authErrors.push('Please enter username and password.');
 
-	      if ($scope.signupData.password !== $scope.signupData.confirmPassword)
-	        return $scope.errors.push('Passwords do not match.');
-
-	      console.log('Doing signup', $scope.loginData);
+	      console.log('Authenticating', $scope.user);
 	      $ionicLoading.show({
 	        template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Signing up...'
 	      });
@@ -88067,6 +88038,11 @@
 	      // code if using a login system
 	      $location.path('/home/panic');
 	      $ionicLoading.hide();
+	    };
+
+	    $scope.logout = function() {
+
+	      $location.path('/auth');
 	    };
 	  });
 	};

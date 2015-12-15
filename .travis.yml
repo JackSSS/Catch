@@ -8,11 +8,9 @@ addons:
     packages:
     - g++-4.8
 node_js:
-  - "4.2"
-
+  - '4.2'
 services:
 - mongodb
-
 deploy:
 	provider: heroku
   api_key:

@@ -40,7 +40,13 @@ gulp.task('build:test', function() {
 
 gulp.task('test:mocha', function() {
   return gulp.src(paths.testBackend, {read: false})
-    .pipe(mocha({reporter: 'nyan'}));
+    .pipe(mocha({reporter: 'nyan'}))
+    .once('error', function() {
+      process.exit(1);
+    })
+    .once('end', function() {
+      process.exit();
+    });
 });
 
 gulp.task('sass', function(done) {
@@ -105,8 +111,10 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-gulp.task('default', ['install', 'build']);
+gulp.task('default', ['install', 'build', 'sass']);
 gulp.task('test:all', ['build', 'build:test', 'test:jshint', 'test:mocha']);
+gulp.task('test:back', ['build', 'test:jshint', 'test:mocha']);
+gulp.task('test:front', ['build:test'])
 gulp.task('watch:all', ['watch:sass', 'watch:js']);
 
 // gulp.doneCallback = function(err) {

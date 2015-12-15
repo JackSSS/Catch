@@ -1,22 +1,32 @@
 <ion-view view-title="Catch">
+  <ion-nav-bar class="bar-dark">
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+  </ion-nav-bar>
+
   <ion-content>
-    <form ng-submit="authenticate(authData)">
+    <form ng-submit="authenticate(user)">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
-          <input type="text" ng-model="authData.username">
+          <input type="text" ng-model="user.username">
         </label>
         <label class="item item-input">
           <span class="input-label">Password</span>
-          <input type="password" ng-model="authData.password">
+          <input type="password" ng-model="user.password">
         </label>
-        <label class="item">
-          <button class="button button-block button-calm" type="button">{{buttonText}}</button>
-          <button class="button button-block button-positive" type="submit">Submit</button>
+        <label class="item" >
+          <button class="button button-block button-stable" ng-if="!signup" type="submit">Login</button>
+          <button class="button button-block button-stable" ng-if="signup" type="submit">Sign Up</button>
         </label>
       </div>
 
-      <div error-list errors="authErrors"></div>
     </form>
+
+    <button class="button button-block button-clear button-assertive" type="button" ng-click="toggleSignup()" ng-if="!signup" >No account? Sign up here.</button>
+    <button class="button button-block button-clear button-assertive" type="button" ng-if="signup" ng-click="toggleSignup()">Already have an account? Log in here.</button>
+
+
+    <div error-list errors="authErrors" ng-if="authErrors.length > 0"></div>
   </ion-content>
 </ion-view>

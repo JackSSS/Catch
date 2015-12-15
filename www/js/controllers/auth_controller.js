@@ -10,38 +10,28 @@ module.exports = function(app) {
     //});
 
     // Form data for the login modal
-    $scope.loginData = {};
-    $scope.signupData = {};
-    $scope.errors = [];
+    $scope.authErrors = [];
+    $scope.user = {};
+    $scope.signup = true;
 
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function() {
-      $scope.errors = [];
+    $scope.toggleSignup = function() {
 
-      if (!($scope.loginData.username && $scope.loginData.password))
-        return $scope.errors.push('Please enter username and password');
+      if ($scope.signup)
+        $scope.signup = false;
+      else
+        $scope.signup = true;
 
-      console.log('Doing login', $scope.loginData);
-      $ionicLoading.show({
-        template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Logging in...'
-      });
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-
-      $location.path('/home/panic');
-      $ionicLoading.hide();
+      $scope.authErrors = [];
+      $scope.user = {};
     };
 
-    $scope.doSignup = function() {
-      $scope.errors = [];
+    $scope.authenticate = function(user) {
+      $scope.authErrors = [];
 
-      if (!($scope.signupData.username && $scope.signupData.password))
-        return $scope.errors.push('Please enter username and passwords.');
+      if (!(user.username && user.password))
+        return $scope.authErrors.push('Please enter username and password.');
 
-      if ($scope.signupData.password !== $scope.signupData.confirmPassword)
-        return $scope.errors.push('Passwords do not match.');
-
-      console.log('Doing signup', $scope.loginData);
+      console.log('Authenticating', $scope.user);
       $ionicLoading.show({
         template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Signing up...'
       });
@@ -49,6 +39,11 @@ module.exports = function(app) {
       // code if using a login system
       $location.path('/home/panic');
       $ionicLoading.hide();
+    };
+
+    $scope.logout = function() {
+
+      $location.path('/auth');
     };
   });
 };

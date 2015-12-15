@@ -6,29 +6,35 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var jshint = require('gulp-jshint');
-var mocha = require('gulp-mocha');
+var gulpMocha = require('gulp-mocha');
 var sh = require('shelljs');
+var webpack = require('webpack-stream');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
   html: ['./www/**/*.html'],
-  js: ['./www/js/**/*.js', './test/**/*.js', './models/**/*.js']
+  js: ['./www/js/**/*.js', './models/**/*.js'],
+  test: ['./test/**/test_bundle.js']
 };
 
-gulp.task('default', ['sass']);
-
-gulp.task('test:jshint', function() {
-  return gulp.src(paths.js)
-    .pipe(jshint({
-      node: true,
-      globals: {
-        describe: true,
-        it: true,
-        before: true,
-        after: true
+gulp.task('build', function() {
+  return gulp.src('www/js/app.js')
+    .pipe(webpack({
+      output: {
+        filename: 'bundle.js'
       }
     }))
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(gulp.dest('./www/js/'));
+});
+
+gulp.task('build:test', function() {
+  return gulp.src('test/test_entry.js')
+    .pipe(webpack({
+      output: {
+        filename: 'test_bundle.js'
+      }
+    }))
+    .pipe(gulp.dest('test/'));
 });
 
 gulp.task('test:mocha', function() {
@@ -49,6 +55,16 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
+// TODO: Add html packing task
+//
+// gulp.task('watch:html', function() {
+//   gulp.watch(paths.html, [''])
+// });
+
+gulp.task('watch:js', function() {
+  gulp.watch(paths.js, ['build']);
+});
+
 gulp.task('watch:sass', function() {
   gulp.watch(paths.sass, ['sass']);
 });
@@ -58,6 +74,25 @@ gulp.task('install', ['git-check'], function() {
     .on('log', function(data) {
       gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
+});
+
+gulp.task('test:jshint', function() {
+  return gulp.src(paths.js)
+    .pipe(jshint({
+      node: true,
+      globals: {
+        describe: true,
+        it: true,
+        before: true,
+        after: true
+      }
+    }))
+    .pipe(jshint.reporter('jshint-stylish'));
+});
+
+gulp.task('test:mocha', function() {
+  return gulp.src(paths.test, {read: false})
+    .pipe(gulpMocha({reporter: 'landing'}));
 });
 
 gulp.task('git-check', function(done) {
@@ -73,5 +108,10 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-gulp.task('test:all', ['test:jshint', 'test:mocha']);
+gulp.task('default', ['install', 'build']);
+gulp.task('test:all', ['build', 'build:test', 'test:jshint', 'test:mocha']);
+gulp.task('watch:all', ['watch:sass', 'watch:js']);
 
+// gulp.doneCallback = function(err) {
+//   process.exit(err ? 1 : 0);
+// };

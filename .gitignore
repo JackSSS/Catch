@@ -5,3 +5,6 @@ node_modules/
 platforms/
 plugins/
 build/
+db/
+www/js/bundle.js
+www/lib/

@@ -6,7 +6,7 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var jshint = require('gulp-jshint');
-var gulpMocha = require('gulp-mocha');
+var mocha = require('gulp-mocha');
 var sh = require('shelljs');
 var webpack = require('webpack-stream');
 
@@ -14,7 +14,8 @@ var paths = {
   sass: ['./scss/**/*.scss'],
   html: ['./www/**/*.html'],
   js: ['./www/js/**/*.js', './models/**/*.js'],
-  test: ['./test/**/test_bundle.js']
+  testFrontend: ['./test/**/test_bundle.js'],
+  testBackend: ['./test/test_routes.js']
 };
 
 gulp.task('build', function() {
@@ -38,7 +39,7 @@ gulp.task('build:test', function() {
 });
 
 gulp.task('test:mocha', function() {
-  return gulp.src('./test/test.js')
+  return gulp.src(paths.testBackend, {read: false})
     .pipe(mocha({reporter: 'nyan'}));
 });
 
@@ -90,10 +91,6 @@ gulp.task('test:jshint', function() {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('test:mocha', function() {
-  return gulp.src(paths.test, {read: false})
-    .pipe(gulpMocha({reporter: 'landing'}));
-});
 
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {

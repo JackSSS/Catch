@@ -5,3 +5,10 @@
   margin-left: 5px;
   margin-right: 5px;
 }
+
+.button-vert-center {
+  display: flex;
+  align-items: center;
+  height: 500px;
+  border: 1px black solid;
+}

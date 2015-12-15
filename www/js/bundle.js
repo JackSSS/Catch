@@ -49,7 +49,7 @@
 	var catchApp = angular.module('catch', ['ionic']);
 
 	__webpack_require__(1)(catchApp);
-	__webpack_require__(3)(catchApp);
+	__webpack_require__(4)(catchApp);
 
 	catchApp.run(function($ionicPlatform) {
 	  $ionicPlatform.ready(function() {
@@ -107,7 +107,8 @@
 	      url: '/panic',
 	      views: {
 	        'homeMenuContent': {
-	          templateUrl: 'templates/panic.html'
+	          templateUrl: 'templates/panic.html',
+	          controller: 'PanicCtrl'
 	        }
 	      }
 	    })
@@ -140,6 +141,7 @@
 
 	module.exports = function(app) {
 	  __webpack_require__(2)(app);
+	  __webpack_require__(3)(app);
 	};
 
 
@@ -200,6 +202,25 @@
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.controller('PanicCtrl', function($scope, $ionicPopup) {
+
+	    $scope.showAlert = function() {
+	      $ionicPopup.alert({
+	        title: 'Catch',
+	        template: 'The panic button has been pushed!',
+	        okType: 'button-dark'
+	      });
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {

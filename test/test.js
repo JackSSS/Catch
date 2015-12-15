@@ -2,6 +2,7 @@ var chai = require('chai');
 var chaihttp = require('chai-http');
 chai.use(chaihttp);
 var expect = chai.expect;
+var should = chai.should();
 
 process.env.MONGOLAB_URI = 'mongodb://localhost/user_test';
 require(__dirname + '/../server');

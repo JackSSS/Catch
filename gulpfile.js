@@ -87,3 +87,7 @@ gulp.task('git-check', function(done) {
 });
 
 gulp.task('test:all', ['test:jshint', 'test:mocha']);
+
+gulp.doneCallback = function(err) {
+  process.exit(err ? 1 : 0);
+};

@@ -1,12 +1,11 @@
-// Ionic Starter App
+var angular = window.angular;
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-angular.module('catch', ['ionic', 'catch.controllers', 'catch.directives'])
+var catchApp = angular.module('catch', ['ionic']);
 
-.run(function($ionicPlatform) {
+require('./controllers/controllers')(catchApp);
+require('./directives/directives')(catchApp);
+
+catchApp.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,9 +19,9 @@ angular.module('catch', ['ionic', 'catch.controllers', 'catch.directives'])
       StatusBar.styleDefault();
     }
   });
-})
+});
 
-.config(function($stateProvider, $urlRouterProvider) {
+catchApp.config(function($stateProvider, $urlRouterProvider) {
 
   // routing for login and signup
   $stateProvider

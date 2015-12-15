@@ -30,7 +30,7 @@ angular.module('catch', ['ionic', 'catch.controllers', 'catch.directives'])
       url: '/app',
       abstract: true,
       templateUrl: 'templates/menu.html',
-      controller: 'AppCtrl'
+      controller: 'AuthCtrl'
     })
 
     .state('app.login', {
@@ -57,7 +57,7 @@ angular.module('catch', ['ionic', 'catch.controllers', 'catch.directives'])
       url: '/home',
       abstract: true,
       templateUrl: 'templates/home-menu.html',
-      controller: 'AppCtrl'
+      // controller: 'AppCtrl'
     })
 
     .state('home.contacts', {

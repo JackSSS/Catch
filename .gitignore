@@ -6,3 +6,4 @@ platforms/
 plugins/
 build/
 db/
+www/js/bundle.js

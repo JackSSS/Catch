@@ -27,10 +27,9 @@ module.exports = function(app) {
       });
       // Simulate a login delay. Remove this and replace with your login
       // code if using a login system
-      $timeout(function() {
-        $ionicLoading.hide();
-        $location.path('/home/panic');
-      }, 1000);
+
+      $location.path('/home/panic');
+      $ionicLoading.hide();
     };
 
     $scope.doSignup = function() {
@@ -48,10 +47,8 @@ module.exports = function(app) {
       });
       // Simulate a login delay. Remove this and replace with your login
       // code if using a login system
-      $timeout(function() {
-        $ionicLoading.hide();
-        $location.path('/home/panic');
-      }, 1000);
+      $location.path('/home/panic');
+      $ionicLoading.hide();
     };
   });
 };

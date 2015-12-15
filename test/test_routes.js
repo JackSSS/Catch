@@ -36,10 +36,6 @@ describe('user routes', function() {
 
   after(function(done) {
     mongoose.connection.db.dropDatabase(function() {
-      console.log('test db dropped');
-    });
-    mongoose.connection.close(function() {
-      console.log('mongo connection closed');
       done();
     });
   });

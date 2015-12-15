@@ -14,7 +14,7 @@ var paths = {
   sass: ['./scss/**/*.scss'],
   html: ['./www/**/*.html'],
   js: ['./www/js/**/*.js'],
-  test: ['./test/**/*.js']
+  test: ['./test/**/test_bundle.js']
 };
 
 gulp.task('build', function() {
@@ -105,8 +105,8 @@ gulp.task('git-check', function(done) {
 
 gulp.task('default', ['install', 'build']);
 gulp.task('test:all', ['build', 'build:test', 'test:jshint', 'test:mocha']);
-gulp.task('watch:all', ['watch:sass', 'watch:js', 'watch:html']);
+gulp.task('watch:all', ['watch:sass', 'watch:js']);
 
-gulp.doneCallback = function(err) {
-  process.exit(err ? 1 : 0);
-};
+// gulp.doneCallback = function(err) {
+//   process.exit(err ? 1 : 0);
+// };

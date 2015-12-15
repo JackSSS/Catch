@@ -7,3 +7,4 @@ plugins/
 build/
 db/
 www/js/bundle.js
+www/lib/

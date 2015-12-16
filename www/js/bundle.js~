@@ -52,8 +52,8 @@
 <<<<<<< HEAD
 	__webpack_require__(5)(catchApp);
 =======
-	__webpack_require__(4)(catchApp);
->>>>>>> 6f08dd5e297d5134f675a9c7d3189a0d9d1969a1
+	__webpack_require__(6)(catchApp);
+>>>>>>> jack
 
 
 	catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
@@ -115,7 +115,12 @@
 	      url: '/search',
 	      views: {
 	        'homeMenuContent': {
+<<<<<<< HEAD
 	          templateUrl: 'templates/search.html'
+=======
+	          templateUrl: 'templates/search.html',
+	          controller: 'SearchController'
+>>>>>>> jack
 	        }
 	      }
 	    })
@@ -159,10 +164,11 @@
 	module.exports = function(app) {
 	  __webpack_require__(2)(app);
 	  __webpack_require__(3)(app);
-<<<<<<< HEAD
 	  __webpack_require__(4)(app);
+<<<<<<< HEAD
 =======
->>>>>>> 6f08dd5e297d5134f675a9c7d3189a0d9d1969a1
+	  __webpack_require__(5)(app);
+>>>>>>> jack
 	};
 
 
@@ -226,7 +232,6 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-<<<<<<< HEAD
 
 	  app.controller('PanicCtrl', function($scope, $ionicPopup) {
 
@@ -252,7 +257,10 @@
 	    // $scope.errors = [];
 
 	    $scope.getAll = function() {
+<<<<<<< HEAD
 	      debugger;
+=======
+>>>>>>> jack
 	      $scope.contacts = data;
 	    };
 
@@ -271,74 +279,45 @@
 	    //     });
 	    //   };
 	    }]);
-=======
-	  app.controller('UsersController', ['$scope', '$http', function($scope, $http) {
-	    $scope.users = [];
-	    $scope.errors = [];
-	    $scope.newUser = null;
-
-	    $scope.getAll = function() {
-	      $http.get('/api/user')
-	        .then(function(res) {
-	          $scope.users = res.data;
-	        }, function(err) {
-	          console.log(err.data);
-	        });
-	    };
-
-	    $scope.create = function(user) {
-	      $http.post('/api/user', user)
-	        .then(function(res) {
-	          $scope.users.push(res.data);
-	          $scope.newUser = null;
-	        }, function(err) {
-	          console.log(err.data)
-	        });
-	    };
-
-	    $scope.update = function(user) {
-	      user.editing = false;
-	      $http.put('/api/user/' + user._id, user)
-	        .then(function(res) {
-	          console.log('this user has a been modified');
-	        }, function(err) {
-	          $scope.errors.push('could not get user: ' + user.name);
-	          console.log(err.data);
-	        });
-	    };
-
-	    $scope.remove = function(user) {
-	      $scope.users.splice($scope.users.indexOf(user), 1);
-	      $http.delete('/api/user/' + user._id)
-	        .then(function(res) {
-	          console.log('user deleted');
-	        }, function(err) {
-	          console.log(err.data);
-	          $scope.errors.push('could not delete user: ' + user.name);
-	          $scope.getAll();
-	        });
-	    };
-	  }]);
->>>>>>> 6f08dd5e297d5134f675a9c7d3189a0d9d1969a1
 	};
 
 
 /***/ },
-<<<<<<< HEAD
 /* 5 */
+<<<<<<< HEAD
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
 	  __webpack_require__(6)(app);
 	  __webpack_require__(7)(app);
 =======
-/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.controller('SearchController', ['$scope', function($scope) {
+	    var data = [{ username: "jack"}, {username: "motley"}]
+	    var search = [{ username: "jack"}, {username: "motley"}]
+	    $scope.users = [];
+
+	   $scope.getAll = function() {
+	      $scope.users = data;
+	    };
+
+	    $scope.search = function() {
+	      $scope.users = search;
+	    };
+	  }]);
+	};
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-	  __webpack_require__(5)(app);
-	  __webpack_require__(6)(app);
->>>>>>> 6f08dd5e297d5134f675a9c7d3189a0d9d1969a1
+	  __webpack_require__(7)(app);
+	  __webpack_require__(8)(app);
+>>>>>>> jack
 	};
 
 
@@ -347,8 +326,8 @@
 <<<<<<< HEAD
 /* 6 */
 =======
-/* 5 */
->>>>>>> 6f08dd5e297d5134f675a9c7d3189a0d9d1969a1
+/* 7 */
+>>>>>>> jack
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -373,11 +352,11 @@
 
 	var GoogleMapsLoader = __webpack_require__(8);
 =======
-/* 6 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var GoogleMapsLoader = __webpack_require__(7);
->>>>>>> 6f08dd5e297d5134f675a9c7d3189a0d9d1969a1
+	var GoogleMapsLoader = __webpack_require__(9);
+>>>>>>> jack
 
 	function createMap(google, lat, lng, zoom, element) {
 	  var myLatLng = new google.maps.LatLng(lat, lng);
@@ -418,8 +397,8 @@
 <<<<<<< HEAD
 /* 8 */
 =======
-/* 7 */
->>>>>>> 6f08dd5e297d5134f675a9c7d3189a0d9d1969a1
+/* 9 */
+>>>>>>> jack
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root, factory) {

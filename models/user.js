@@ -8,6 +8,8 @@ var userSchema = new mongoose.Schema({
   deviceId: Number,
   location: Number,
   contacts: Array,
+  sentRequests: Array,
+  receivedRequests: Array,
   auth: {
   	basic: {
   		username: String,

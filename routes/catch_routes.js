@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var User = require(__dirname + '/../models/user').User;
+var User = require(__dirname + '/../models/user');
 var handleServerError = require(__dirname + '/../lib/handle_server_error');
 
 var usersRouter = module.exports = exports = express.Router();

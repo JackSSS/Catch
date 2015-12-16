@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/catch_dev');
 
 var catchRouter = require(__dirname + '/routes/catch_routes');
+var contactsRouter = require(__dirname + '/routes/contacts_routes');
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -16,6 +17,7 @@ app.use(function(req, res, next) {
 app.use(express.static(__dirname + '/www'));
 
 app.use('/api', catchRouter);
+app.use('/api', contactsRouter);
 
 var port = process.env.PORT || 3000;
 

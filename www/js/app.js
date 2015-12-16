@@ -1,11 +1,11 @@
 var angular = window.angular;
 
-var catchApp = angular.module('catch', ['ionic']);
+var catchApp = angular.module('catch', ['ionic', 'ngCordova']);
 
 require('./controllers/controllers')(catchApp);
 require('./directives/directives')(catchApp);
 
-catchApp.run(function($ionicPlatform) {
+catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,6 +18,17 @@ catchApp.run(function($ionicPlatform) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    var posOptions = {
+      enableHighAccuracy: true,
+      timeout: 20000
+    };
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+      $rootScope.lat = position.coords.latitude;
+      $rootScope.lng = position.coords.longitude;
+    }, function(err) {
+      console.log(err);
+    });
   });
 });
 

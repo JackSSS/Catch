@@ -46,12 +46,12 @@
 
 	var angular = window.angular;
 
-	var catchApp = angular.module('catch', ['ionic']);
+	var catchApp = angular.module('catch', ['ionic', 'ngCordova']);
 
 	__webpack_require__(1)(catchApp);
 	__webpack_require__(4)(catchApp);
 
-	catchApp.run(function($ionicPlatform) {
+	catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
 	  $ionicPlatform.ready(function() {
 	    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 	    // for form inputs)
@@ -64,6 +64,17 @@
 	      // org.apache.cordova.statusbar required
 	      StatusBar.styleDefault();
 	    }
+
+	    var posOptions = {
+	      enableHighAccuracy: true,
+	      timeout: 20000
+	    };
+	    $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+	      $rootScope.lat = position.coords.latitude;
+	      $rootScope.lng = position.coords.longitude;
+	    }, function(err) {
+	      console.log(err);
+	    });
 	  });
 	});
 
@@ -255,14 +266,14 @@
 
 	module.exports = function(app) {
 
-	  app.directive('map', function() {
+	  app.directive('map', function($rootScope) {
 	    return {
 	      restrict: 'AC',
 	      link: function(scope, element, attrs) {
 
-	        var zoom = 8;
-	        var lat = 50.108333;
-	        var lng = -122.9425;
+	        var zoom = 16;
+	        var lat = $rootScope.lat;
+	        var lng = $rootScope.lng;
 
 	        var myLatLng = new google.maps.LatLng(lat, lng);
 	        var mapOptions = {

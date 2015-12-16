@@ -1,13 +1,13 @@
 module.exports = function(app) {
 
-  app.directive('map', function() {
+  app.directive('map', function($rootScope) {
     return {
       restrict: 'AC',
       link: function(scope, element, attrs) {
 
-        var zoom = 8;
-        var lat = 50.108333;
-        var lng = -122.9425;
+        var zoom = 16;
+        var lat = $rootScope.lat;
+        var lng = $rootScope.lng;
 
         var myLatLng = new google.maps.LatLng(lat, lng);
         var mapOptions = {

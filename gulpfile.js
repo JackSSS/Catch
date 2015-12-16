@@ -116,7 +116,7 @@ gulp.task('git-check', function(done) {
 gulp.task('default', ['install', 'build', 'sass']);
 gulp.task('test:all', ['build', 'build:test', 'test:jshint', 'test:mocha']);
 gulp.task('test:back', ['build', 'test:jshint', 'test:mocha']);
-gulp.task('test:front', ['build:test'])
+gulp.task('test:front', ['build:test']);
 gulp.task('watch:all', ['watch:sass', 'watch:js']);
 
 // gulp.doneCallback = function(err) {

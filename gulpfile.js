@@ -16,7 +16,7 @@ var paths = {
   html: ['./www/**/*.html'],
   js: ['./www/js/**/*.js', './models/**/*.js'],
   testFrontend: ['./test/**/test_bundle.js'],
-  testBackend: ['./test/test_routes.js']
+  testBackend: ['./test/test_routes.js', './test/contacts_routes_test.js']
 };
 
 gulp.task('build', function() {

@@ -44,20 +44,13 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var GoogleMapsLoader = __webpack_require__(1);
-
 	var angular = window.angular;
 
 	var catchApp = angular.module('catch', ['ionic', 'ngCordova']);
 
-	__webpack_require__(2)(catchApp);
+	__webpack_require__(1)(catchApp);
 	__webpack_require__(5)(catchApp);
 
-	// catchApp.config(function($ionicAppProvider) {
-	//   $ionicAppProvider.identify({
-	//     google_maps_key: GOOGLE_MAPS_KEY
-	//   });
-	// });
 
 	catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
 	  $ionicPlatform.ready(function() {
@@ -108,7 +101,8 @@
 	      url: '/contacts',
 	      views: {
 	        'homeMenuContent': {
-	          templateUrl: 'templates/contacts.html'
+	          templateUrl: 'templates/contacts.html',
+	          controller: 'ContactsController'
 	        }
 	      }
 	    })
@@ -156,6 +150,195 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  __webpack_require__(2)(app);
+	  __webpack_require__(3)(app);
+	  __webpack_require__(4)(app);
+	};
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.controller('AuthCtrl', function($scope, $timeout, $location, $ionicLoading) {
+
+	    // With the new view caching in Ionic, Controllers are only called
+	    // when they are recreated or on app start, instead of every page change.
+	    // To listen for when this page is active (for example, to refresh data),
+	    // listen for the $ionicView.enter event:
+	    //$scope.$on('$ionicView.enter', function(e) {
+	    //});
+
+	    // Form data for the login modal
+	    $scope.authErrors = [];
+	    $scope.user = {};
+	    $scope.signup = true;
+
+	    $scope.toggleSignup = function() {
+
+	      if ($scope.signup)
+	        $scope.signup = false;
+	      else
+	        $scope.signup = true;
+
+	      $scope.authErrors = [];
+	      $scope.user = {};
+	    };
+
+	    $scope.authenticate = function(user) {
+	      $scope.authErrors = [];
+
+	      if (!(user.username && user.password))
+	        return $scope.authErrors.push('Please enter username and password.');
+
+	      console.log('Authenticating', $scope.user);
+	      $ionicLoading.show({
+	        template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Signing up...'
+	      });
+	      // Simulate a login delay. Remove this and replace with your login
+	      // code if using a login system
+	      $location.path('/home/panic');
+	      $ionicLoading.hide();
+	    };
+
+	    $scope.logout = function() {
+
+	      $location.path('/auth');
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.controller('PanicCtrl', function($scope, $ionicPopup) {
+
+	    $scope.showAlert = function() {
+	      $ionicPopup.alert({
+	        title: 'Catch',
+	        template: 'The panic button has been pushed!',
+	        okType: 'button-dark'
+	      });
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.controller('ContactsController', ['$scope', function($scope) {
+	    var data = [{ username: "jack"}, {username: "Jack Sneed"}];
+	    $scope.contacts = [];
+	    // $scope.errors = [];
+
+	    $scope.getAll = function() {
+	      debugger;
+	      $scope.contacts = data;
+	    };
+
+	    // $scope.update = function(user) {
+	    //   user.editing = false;
+	    //   $http.post('/api/user' + user._id, user)
+	    //     .then(function(res) {
+	    //       $scope.users.push(res.data);
+	    //       $push: {contacts:
+	    //         {$each: [{user._id: res.data},
+	    //           {name: res.data},
+	    //           {location: res.data}]
+	    //         };
+	    //     }, function(err) {
+	    //       console.log(err.data)
+	    //     });
+	    //   };
+	    }]);
+	};
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(app) {
+	  __webpack_require__(6)(app);
+	  __webpack_require__(7)(app);
+	};
+
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+
+	  app.directive('errorList', function() {
+	    return {
+	      restrict: 'AC',
+	      replace: true,
+	      templateUrl: 'templates/error_list.html',
+	      scope: {
+	        errors: '='
+	      }
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var GoogleMapsLoader = __webpack_require__(8);
+
+	function createMap(google, lat, lng, zoom, element) {
+	  var myLatLng = new google.maps.LatLng(lat, lng);
+	  var mapOptions = {
+	    zoom: zoom,
+	    center: myLatLng
+	  };
+	  var map = new google.maps.Map(element[0], mapOptions);
+
+	  var marker = new google.maps.Marker({
+	    position: myLatLng,
+	    map: map,
+	    draggable: false
+	  });
+	}
+
+	module.exports = function(app) {
+
+	  app.directive('map', function($rootScope) {
+	    return {
+	      restrict: 'AC',
+	      link: function(scope, element, attrs) {
+
+	        var zoom = 16;
+	        var lat = $rootScope.lat;
+	        var lng = $rootScope.lng;
+
+	        GoogleMapsLoader.load(function(google) {
+	          createMap(google, lat, lng, zoom, element);
+	        });
+	      }
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root, factory) {
@@ -383,197 +566,6 @@
 		return GoogleMapsLoader;
 
 	});
-
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(app) {
-	  __webpack_require__(3)(app);
-	  __webpack_require__(4)(app);
-	};
-
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	module.exports = function(app) {
-
-	  app.controller('AuthCtrl', function($scope, $timeout, $location, $ionicLoading) {
-
-	    // With the new view caching in Ionic, Controllers are only called
-	    // when they are recreated or on app start, instead of every page change.
-	    // To listen for when this page is active (for example, to refresh data),
-	    // listen for the $ionicView.enter event:
-	    //$scope.$on('$ionicView.enter', function(e) {
-	    //});
-
-	    // Form data for the login modal
-	    $scope.authErrors = [];
-	    $scope.user = {};
-	    $scope.signup = true;
-
-	    $scope.toggleSignup = function() {
-
-	      if ($scope.signup)
-	        $scope.signup = false;
-	      else
-	        $scope.signup = true;
-
-	      $scope.authErrors = [];
-	      $scope.user = {};
-	    };
-
-	    $scope.authenticate = function(user) {
-	      $scope.authErrors = [];
-
-	      if (!(user.username && user.password))
-	        return $scope.authErrors.push('Please enter username and password.');
-
-	      console.log('Authenticating', $scope.user);
-	      $ionicLoading.show({
-	        template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Signing up...'
-	      });
-	      // Simulate a login delay. Remove this and replace with your login
-	      // code if using a login system
-	      $location.path('/home/panic');
-	      $ionicLoading.hide();
-	    };
-
-	    $scope.logout = function() {
-
-	      $location.path('/auth');
-	    };
-	  });
-	};
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-	module.exports = function(app) {
-	  app.controller('UsersController', ['$scope', '$http', function($scope, $http) {
-	    $scope.users = [];
-	    $scope.errors = [];
-	    $scope.newUser = null;
-
-	    $scope.getAll = function() {
-	      $http.get('/api/user')
-	        .then(function(res) {
-	          $scope.users = res.data;
-	        }, function(err) {
-	          console.log(err.data);
-	        });
-	    };
-
-	    $scope.create = function(user) {
-	      $http.post('/api/user', user)
-	        .then(function(res) {
-	          $scope.users.push(res.data);
-	          $scope.newUser = null;
-	        }, function(err) {
-	          console.log(err.data)
-	        });
-	    };
-
-	    $scope.update = function(user) {
-	      user.editing = false;
-	      $http.put('/api/user/' + user._id, user)
-	        .then(function(res) {
-	          console.log('this user has a been modified');
-	        }, function(err) {
-	          $scope.errors.push('could not get user: ' + user.name);
-	          console.log(err.data);
-	        });
-	    };
-
-	    $scope.remove = function(user) {
-	      $scope.users.splice($scope.users.indexOf(user), 1);
-	      $http.delete('/api/user/' + user._id)
-	        .then(function(res) {
-	          console.log('user deleted');
-	        }, function(err) {
-	          console.log(err.data);
-	          $scope.errors.push('could not delete user: ' + user.name);
-	          $scope.getAll();
-	        });
-	    };
-	  }]);
-	};
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(app) {
-	  __webpack_require__(6)(app);
-	  __webpack_require__(7)(app);
-	};
-
-
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	module.exports = function(app) {
-
-	  app.directive('errorList', function() {
-	    return {
-	      restrict: 'AC',
-	      replace: true,
-	      templateUrl: 'templates/error_list.html',
-	      scope: {
-	        errors: '='
-	      }
-	    };
-	  });
-	};
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var GoogleMapsLoader = __webpack_require__(1);
-
-	function createMap(google, lat, lng, zoom, element) {
-	  var myLatLng = new google.maps.LatLng(lat, lng);
-	  var mapOptions = {
-	    zoom: zoom,
-	    center: myLatLng
-	  };
-	  var map = new google.maps.Map(element[0], mapOptions);
-
-	  var marker = new google.maps.Marker({
-	    position: myLatLng,
-	    map: map,
-	    draggable: false
-	  });
-	}
-
-	module.exports = function(app) {
-
-	  app.directive('map', function($rootScope) {
-	    return {
-	      restrict: 'AC',
-	      link: function(scope, element, attrs) {
-
-	        var zoom = 16;
-	        var lat = $rootScope.lat;
-	        var lng = $rootScope.lng;
-
-	        GoogleMapsLoader.load(function(google) {
-	          createMap(google, lat, lng, zoom, element);
-	        });
-	      }
-	    };
-	  });
-	};
 
 
 /***/ }

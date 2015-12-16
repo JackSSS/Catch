@@ -1,10 +1,11 @@
 module.exports = function(app) {
-  app.controller('sController', ['$scope', '$http', '$push' function($scope, $http, $push) {
+  app.controller('ContactsController', ['$scope', function($scope) {
     var data = [{ username: "jack"}, {username: "Jack Sneed"}];
     $scope.contacts = [];
-    $scope.errors = [];
+    // $scope.errors = [];
 
     $scope.getAll = function() {
+      debugger;
       $scope.contacts = data;
     };
 

@@ -19,12 +19,12 @@ module.exports = function(app) {
         .then(function(res) {
           $scope.users.push(res.data);
           $push: {contacts:
-            {name: res.data,
-             location: res.data
+            {$each: [{name: res.data},
+             {location: res.data}]
             };
         }, function(err) {
           console.log(err.data)
         });
-    };
-  }]);
+      };
+    }]);
 };

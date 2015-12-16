@@ -1,5 +1,3 @@
-var GoogleMapsLoader = require('google-maps');
-
 var angular = window.angular;
 
 var catchApp = angular.module('catch', ['ionic', 'ngCordova']);
@@ -7,11 +5,6 @@ var catchApp = angular.module('catch', ['ionic', 'ngCordova']);
 require('./controllers/controllers')(catchApp);
 require('./directives/directives')(catchApp);
 
-// catchApp.config(function($ionicAppProvider) {
-//   $ionicAppProvider.identify({
-//     google_maps_key: GOOGLE_MAPS_KEY
-//   });
-// });
 
 catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
   $ionicPlatform.ready(function() {

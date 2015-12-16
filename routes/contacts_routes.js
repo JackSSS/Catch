@@ -16,7 +16,7 @@ contactsRouter.get('/contacts', jsonParser, function(req, res) {
     User.find({_id: {$in: contactsIds}}, function(err, contacts) {
       if (err) return handleError(err, res);
 
-      res.json({contacts: contacts});
+      res.json(contacts);
     });
   }
 
@@ -80,4 +80,14 @@ contactsRouter.post('/contacts/confirm', jsonParser, function(req, res) {
   }
 
   updateRequester(updateUser);
+});
+
+contactsRouter.post('/contacts/search', jsonParser, function(req, res) {
+  var regex = new RegExp(req.body.search);
+
+  User.find({$or: [{username: regex}, {name: regex}]}, function(err, results) {
+    if (err) return handleError(err, res);
+
+    res.json(results);
+  });
 });

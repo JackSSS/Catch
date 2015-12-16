@@ -14,9 +14,10 @@ usersRouter.get('/users', function(req, res) {
 
 usersRouter.post('/users', bodyParser.json(), function(req, res) {
   var newUser = new User(req.body);
-  newUser.save(function(err, data) {
+  console.log(req.body);
+  newUser.save(function(err, savedUser) {
     if (err) return handleServerError(err, res);
-    res.json(data);
+    res.json(savedUser);
   });
 });
 

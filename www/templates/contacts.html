@@ -1,5 +1,11 @@
-<ion-view view-title="Catch">
-  <ion-content>
-    <h1>Contacts</h1>
+<ion-view view-title="C O N T A C T S">
+  <ion-content ng-init="getAll()">
+    <ion-list>
+      <ion-item ng-repeat="contact in contacts">
+      <div class="item item-button-right">
+        <h2>{{contact.username}}</h2>
+      </div>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

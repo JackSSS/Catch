@@ -55,7 +55,8 @@ catchApp.config(function($stateProvider, $urlRouterProvider) {
       url: '/contacts',
       views: {
         'homeMenuContent': {
-          templateUrl: 'templates/contacts.html'
+          templateUrl: 'templates/contacts.html',
+          controller: 'ContactsController'
         }
       }
     })
@@ -64,7 +65,8 @@ catchApp.config(function($stateProvider, $urlRouterProvider) {
       url: '/search',
       views: {
         'homeMenuContent': {
-          templateUrl: 'templates/search.html'
+          templateUrl: 'templates/search.html',
+          controller: 'SearchController'
         }
       }
     })

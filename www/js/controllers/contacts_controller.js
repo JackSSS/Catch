@@ -18,7 +18,10 @@ module.exports = function(app) {
       $http.post('/api/user' + user._id, user)
         .then(function(res) {
           $scope.users.push(res.data);
-          $push: {contacts: res.data};
+          $push: {contacts:
+            {name: res.data,
+             location: res.data
+            };
         }, function(err) {
           console.log(err.data)
         });

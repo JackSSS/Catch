@@ -9,7 +9,7 @@ var jshint = require('gulp-jshint');
 var mocha = require('gulp-mocha');
 var sh = require('shelljs');
 var webpack = require('webpack-stream');
-var webpackEnv = require('webpack-env');
+//var webpackEnv = require('webpack-env');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
@@ -24,8 +24,8 @@ gulp.task('build', function() {
     .pipe(webpack({
       output: {
         filename: 'bundle.js'
-      },
-      plugins: [webpackEnv]
+      }
+      //plugins: [webpackEnv]
     }))
     .pipe(gulp.dest('./www/js/'));
 });
@@ -116,7 +116,7 @@ gulp.task('git-check', function(done) {
 gulp.task('default', ['install', 'build', 'sass']);
 gulp.task('test:all', ['build', 'build:test', 'test:jshint', 'test:mocha']);
 gulp.task('test:back', ['build', 'test:jshint', 'test:mocha']);
-gulp.task('test:front', ['build:test'])
+gulp.task('test:front', ['build:test']);
 gulp.task('watch:all', ['watch:sass', 'watch:js']);
 
 // gulp.doneCallback = function(err) {

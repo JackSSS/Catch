@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var User = require(__dirname + '/../models/user').User;
+var User = require(__dirname + '/../models/user');
 var handleServerError = require(__dirname + '/../lib/handle_server_error');
 
 var usersRouter = module.exports = exports = express.Router();
@@ -14,9 +14,10 @@ usersRouter.get('/users', function(req, res) {
 
 usersRouter.post('/users', bodyParser.json(), function(req, res) {
   var newUser = new User(req.body);
-  newUser.save(function(err, data) {
+  console.log(req.body);
+  newUser.save(function(err, savedUser) {
     if (err) return handleServerError(err, res);
-    res.json(data);
+    res.json(savedUser);
   });
 });
 

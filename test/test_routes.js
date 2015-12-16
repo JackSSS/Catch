@@ -35,6 +35,56 @@ describe('user routes', function() {
       });
   });
 
+  describe('auth routes', function() {
+    it('should be able to create a user', function(done) {
+      chai.request('localhost:3000')
+        .post('/api/signup')
+        .send({username: 'test', password: 'pass'})
+        .end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(res.body).to.have.property('token');
+          done();
+        });
+    });
+  
+    it('should be able to sign a user in', function(done) {
+      chai.request('localhost:3000')
+        .get('/api/signin')
+        .auth('test', 'pass')
+        .end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(res.body).to.have.property('token');
+          done();   
+        });
+    });
+
+    it('should refuse bad username', function(done) {
+      chai.request('localhost:3000')
+        .get('/api/signin')
+        .auth('not a user', 'pass')
+        .end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(res.body).to.have.property('msg');
+          expect(res.body.msg).to.eql('Cannot authenticate, you amorphous pile of goo.');
+          expect(res.status).to.eql(401);
+          done();
+        });
+    });
+
+    it('should refuse bad passwords', function(done) {
+      chai.request('localhost:3000')
+        .get('/api/signin')
+        .auth('test', 'not a password')
+        .end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(res.body).to.have.property('msg');
+          expect(res.body.msg).to.eql('Authentication not possible, wtf you liar');
+          expect(res.status).to.eql(401);
+          done();
+        });
+    });
+  });
+
   after(function(done) {
     mongoose.connection.db.dropDatabase(function() {
       done();

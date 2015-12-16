@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/catch_dev');
+mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/catch_dev");
 
 var catchRouter = require(__dirname + '/routes/catch_routes');
 var authRouter = require(__dirname + '/routes/auth_routes');

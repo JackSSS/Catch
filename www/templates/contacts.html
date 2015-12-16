@@ -1,12 +1,12 @@
 <ion-view view-title="Contacts">
   <ion-content>
     <h1>C O N T A C T S</h1>
-      <ion-list ng-controller="ContactsController as users" ng-init="users.getAll()">
-        <ion-item ng-repeat="user in users.users">
-        <div data-ng-if="!user.editing" class="item item-button-right">
-          <h2>{{user.name}}</h2>
+      <ion-list ng-controller="ContactsController" ng-init="contacts.getAll()">
+        <ion-item ng-repeat="contact in contacts.contacts">
+        <div data-ng-if="!contact.editing" class="item item-button-right">
+          <h2>{{contacts.username}}</h2>
           <div class="button-bar">
-            <button ng-click="users.update(user)" class="button button-positive">
+            <button ng-click="contacts.update(contact)" class="button button-positive">
               <i class="icon ion-android-add-circle"></i>
             </button>
           </div>

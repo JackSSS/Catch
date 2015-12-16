@@ -219,15 +219,15 @@
 	        });
 	    };
 
-	    // $scope.create = function(user) {
-	    //   $http.post('/api/user', user)
-	    //     .then(function(res) {
-	    //       $scope.users.push(res.data);
-	    //       $scope.newUser = null;
-	    //     }, function(err) {
-	    //       console.log(err.data)
-	    //     });
-	    // };
+	    $scope.create = function(user) {
+	      $http.post('/api/user', user)
+	        .then(function(res) {
+	          $scope.users.push(res.data);
+	          $scope.newUser = null;
+	        }, function(err) {
+	          console.log(err.data)
+	        });
+	    };
 
 	    $scope.update = function(user) {
 	      user.editing = false;

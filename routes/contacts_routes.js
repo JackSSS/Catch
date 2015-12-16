@@ -6,9 +6,9 @@ var handleError = require(__dirname + '/../lib/handle_server_error');
 
 var contactsRouter = module.exports = exports = express.Router();
 
-contactsRouter.get('/contacts', jsonParser, function(req, res) {
+contactsRouter.get('/contacts/:id', function(req, res) {
   // THIS HAS TO BE CHANGED ONCE AUTH IS ADDED
-  var userId = '5671b3ac43b58da6047cfd3e';
+  var userId = req.params.id;
 
   function getContacts(user) {
     var contactsIds = user.contacts;

@@ -5,7 +5,6 @@ module.exports = function(app) {
     // $scope.errors = [];
 
     $scope.getAll = function() {
-      debugger;
       $scope.contacts = data;
     };
 

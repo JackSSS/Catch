@@ -87,8 +87,12 @@ module.exports = function(app) {
     };
 
     $scope.logout = function() {
-
       $location.path('/auth');
+      $cookies.remove('token');
     };
+
+    if(!$cookies.get('token')) {
+      $location.path('/auth');
+    }
   });
 };

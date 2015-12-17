@@ -96,7 +96,8 @@ catchApp.config(function($stateProvider, $urlRouterProvider) {
       url: '/checkin',
       views: {
         'homeMenuContent': {
-          templateUrl: 'templates/checkin.html'
+          templateUrl: 'templates/checkin.html',
+          controller: 'CheckinCtrl'
         }
       }
     });

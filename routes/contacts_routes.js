@@ -96,12 +96,9 @@ contactsRouter.post('/contacts/search', jsonParser, function(req, res) {
 
   if (!req.body.search)
     return res.status(411).json({msg: 'no search criteria entered'});
-
   var regex = new RegExp(req.body.search);
-
   User.find({$or: [{username: regex}, {name: regex}]}, function(err, results) {
     if (err) return handleError(err, res);
-
     res.json(results);
   });
 });

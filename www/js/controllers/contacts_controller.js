@@ -1,11 +1,28 @@
 module.exports = function(app) {
-  app.controller('ContactsController', ['$scope', function($scope) {
-    var data = [{ username: "jack"}, {username: "Jack Sneed"}];
+  app.controller('ContactsController', ['$scope', '$http', function($scope, $http) {
+    var contacts = [
+        {username: 'bill'},
+        {username: 'jill'},
+        {username: 'sarah'},
+        {username: 'jim'}
+    ];
+    var receivedRequests = [
+        {username: 'dan'},
+        {username: 'mark'},
+        {username: 'matt'},
+        {username: 'nick'}
+    ];
     $scope.contacts = [];
+    $scope.receivedRequests = [];
     // $scope.errors = [];
 
     $scope.getAll = function() {
-      $scope.contacts = data;
+      // $scope.contacts = contacts;
+      // $scope.receivedRequests = receivedRequests;
+    };
+
+    $scope.addContact = function(contact) {
+      console.log(contact);
     };
 
     // $scope.update = function(user) {

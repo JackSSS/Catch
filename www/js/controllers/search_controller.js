@@ -6,9 +6,9 @@ module.exports = function(app) {
     $scope.getAll = function() {
      $http.get('/api/users')
         .then(function(res) {
-          $scope.contacts = res.data
+          $scope.contacts = res.data;
           }, function(err) {
-            console.log(err.data)
+            console.log(err.data);
           });
     };
 
@@ -17,7 +17,7 @@ module.exports = function(app) {
         .then(function(res) {
           $scope.contacts = res.data;
         }, function(err) {
-          console.log(err.data)
+          console.log(err.data);
         });
 
     };
@@ -27,7 +27,7 @@ module.exports = function(app) {
         .then(function(res) {
           $scope.contacts.send(userId, contactId);
         }, function(err) {
-          console.log(err.data)
+          console.log(err.data);
         });
 
     };
@@ -37,7 +37,7 @@ module.exports = function(app) {
         .then(function(res) {
           $scope.contacts.confirm(contactId, requesterId);
         }, function(err) {
-          console.log(err.data)
+          console.log(err.data);
         });
 
     };

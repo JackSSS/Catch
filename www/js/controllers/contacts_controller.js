@@ -19,7 +19,6 @@ module.exports = function(app) {
     $scope.getAll = function() {
       $http.get('http://localhost:3000/api/contacts/' + $scope.currentUser.id)
         .then(function(res) {
-          debugger;
           $scope.contacts = res.data.contacts;
           $scope.receivedRequests = res.data.receivedRequests;
         }, function(err) {
@@ -27,8 +26,17 @@ module.exports = function(app) {
         });
     };
 
-    $scope.addContact = function(contact) {
+    $scope.acceptRequest = function(contact) {
       console.log(contact);
+      $http.post('http://localhost:3000/api/contacts/confirm', {
+        userId: $scope.currentUser.id,
+        requesterId: contact._id
+      })
+        .then(function(res) {
+          $scope.getAll();
+        }, function(err) {
+          console.log(err);
+        });
     };
 
     // $scope.update = function(user) {

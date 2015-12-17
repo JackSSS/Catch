@@ -874,12 +874,12 @@
 	          });
 	    };
 
-	    $scope.doSearch = function() {
-	      debugger;
-	      $http.post('/api/contacts/search', {search: $scope.search}) // function ends here.
+	    $scope.doSearch = function(search) {
+	      console.log("dosearch" + search);
+	      $http.post('/api/contacts/search', {search}) // function ends here.
 	        .then(function(res) {
-	          debugger;
 	          $scope.contacts = res.data;
+	          console.log($scope.contacts);
 	        }, function(err) {
 	          console.log(err.data);
 	        });

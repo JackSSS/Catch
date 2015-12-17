@@ -8,16 +8,22 @@ var basicHttp = require(__dirname + '/../lib/basic_http_auth');
 var authRouter = module.exports = express.Router();
 
 authRouter.post('/signup', bodyParser.json(), function(req, res) {
-	var user = new User();
-	user.auth.basic.username = req.body.auth.username;
-	user.username = req.body.auth.username;
-	user.hashPW(req.body.auth.password);
+	User.findOne({'auth.basic.username': req.body.auth.username}, function(err, foundUser) {
+		if(!foundUser) {
+			var user = new User();
+			user.auth.basic.username = req.body.auth.username;
+			user.username = req.body.auth.username;
+			user.hashPW(req.body.auth.password);
 
-	user.save(function(err, savedUser) {
-		if(err) return handleError(err, res);
-		savedUser.genToken(function(err, token) {
-			res.json({token: token});
-		});
+			user.save(function(err, savedUser) {
+				if(err) return handleError(err, res);
+				savedUser.genToken(function(err, token) {
+					res.json({token: token});
+				});
+			});
+		} else {
+			res.status(401).json({msg: 'User already exists!'});
+		}
 	});
 });
 
@@ -41,14 +47,14 @@ authRouter.get('/signin', basicHttp, function(req, res) {
 		if(!foundUser) {
 			console.log('user: ' + req.auth.username + ' not found');
 			return res.status(401).json({
-				msg: 'Cannot authenticate, you amorphous pile of goo.'
+				msg: 'User not found!'
 			});
 		}
 
 		if(!foundUser.checkPW(req.auth.password)) {
 			console.log('incorrect password provided');
 			return res.status(401).json({
-				msg: 'Authentication not possible, wtf you liar'
+				msg: 'Incorrect password!'
 			});
 		}
 

@@ -60,7 +60,7 @@ module.exports = function(app) {
             $location.path('/home/panic');
             $ionicLoading.hide();
           }, function(err) {
-            $scope.authErrors.push(err);
+            $scope.authErrors.push(err.data.msg);
             console.log(err.data);
             $ionicLoading.hide();
           });

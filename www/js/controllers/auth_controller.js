@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-  app.controller('AuthCtrl', function($scope, $timeout, $location, $ionicLoading) {
+  app.controller('AuthCtrl', function($scope, $timeout, $location, $ionicLoading, $http, $cookies, $base64) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -13,6 +13,8 @@ module.exports = function(app) {
     $scope.authErrors = [];
     $scope.user = {};
     $scope.signup = true;
+    $scope.token = '';
+    $scope.currentUser = '';
 
     $scope.toggleSignup = function() {
 
@@ -25,20 +27,67 @@ module.exports = function(app) {
       $scope.user = {};
     };
 
+    $scope.getUser = function() {
+      $scope.token = $cookies.get('token');
+      $http.defaults.headers.common.token = $scope.token;
+      $http.get('/api/user')
+        .then(function(res) {
+          $scope.currentUser = res.data.username;
+        }, function(err) {
+          console.log(err);
+        });
+
+    };
+
     $scope.authenticate = function(user) {
       $scope.authErrors = [];
 
-      if (!(user.username && user.password))
+      if (!(user.auth.username && user.auth.password))
         return $scope.authErrors.push('Please enter username and password.');
 
       console.log('Authenticating', $scope.user);
       $ionicLoading.show({
-        template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Signing up...'
+        template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Authenticating...'
       });
       // Simulate a login delay. Remove this and replace with your login
       // code if using a login system
-      $location.path('/home/panic');
-      $ionicLoading.hide();
+
+      if($scope.signup) {
+        $http.post('/api/signup', user)
+          .then(function(res) {
+            $cookies.put('token', res.data.token);
+            $scope.getUser();
+            $location.path('/home/panic');
+            $ionicLoading.hide();
+          }, function(err) {
+            $scope.authErrors.push(err.data.msg);
+            console.log(err.data);
+            $ionicLoading.hide();
+          });
+      } else {
+        $http({
+          method: 'GET',
+          url: '/api/signin',
+          headers: {
+            'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)
+          }
+        }).then(function(res) {
+          console.log(res);
+          $cookies.put('token', res.data.token);
+          $scope.getUser();
+          $location.path('/home/panic');
+          $ionicLoading.hide();
+        }, function(err) {
+          $scope.authErrors.push(err.data.msg);
+          console.log(err.data);
+          $ionicLoading.hide();
+        });
+
+      }
+
+
+      // $location.path('/home/panic');
+      // $ionicLoading.hide();
     };
 
     $scope.logout = function() {

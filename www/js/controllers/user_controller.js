@@ -19,7 +19,7 @@ module.exports = function(app) {
           $scope.users.push(res.data);
           $scope.newUser = null;
         }, function(err) {
-          console.log(err.data)
+          console.log(err.data);
         });
     };
 

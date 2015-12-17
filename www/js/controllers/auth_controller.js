@@ -14,7 +14,7 @@ module.exports = function(app) {
     $scope.user = {};
     $scope.signup = true;
     $scope.token = '';
-    $scope.currentUser = '';
+    $scope.currentUser = null;
 
     $scope.toggleSignup = function() {
 
@@ -88,7 +88,10 @@ module.exports = function(app) {
     };
 
     $scope.logout = function() {
-
+      $scope.currentUser = null;
+      $scope.user = {};
+      $scope.user.auth = null;
+      $cookies.remove('token');
       $location.path('/auth');
     };
   });

@@ -70,6 +70,7 @@ authRouter.get('/user', decryptUser, function(req, res) {
 		username: req.user.username,
 		deviceId: req.user.deviceId,
 		location: req.user.location,
-		contacts: req.user.contacts
+		contacts: req.user.contacts,
+		id: req.user._id
 	});
 });

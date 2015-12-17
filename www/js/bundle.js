@@ -875,15 +875,9 @@
 	    };
 
 	    $scope.doSearch = function(search) {
-<<<<<<< HEAD
-	      console.log("dosearch" + search);
-	      $http.post('/api/contacts/search', {search}) // function ends here.
-=======
 	      $http.post('/api/contacts/search', {search})
->>>>>>> 31f532298ac81821313ddcd07b29e21720502349
 	        .then(function(res) {
 	          $scope.contacts = res.data;
-	          console.log($scope.contacts);
 	        }, function(err) {
 	          console.log(err.data);
 	        });

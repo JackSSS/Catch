@@ -19,7 +19,6 @@ var userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.hashPW = function(pw) {
-  console.log('hashing: ' + pw);
 	var hash = this.auth.basic.password = bcrypt.hashSync(pw, 8);
 	return hash;
 };

@@ -1,6 +1,8 @@
+require('angular-cookies');
+require('angular-base64');
 var angular = window.angular;
 
-var catchApp = angular.module('catch', ['ionic', 'ngCordova']);
+var catchApp = angular.module('catch', ['ionic', 'ngCordova', 'ngCookies', 'base64']);
 
 require('./controllers/controllers')(catchApp);
 require('./directives/directives')(catchApp);

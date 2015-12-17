@@ -17,8 +17,14 @@ module.exports = function(app) {
     // $scope.errors = [];
 
     $scope.getAll = function() {
-      // $scope.contacts = contacts;
-      // $scope.receivedRequests = receivedRequests;
+      $http.get('http://localhost:3000/api/contacts/' + $scope.currentUser.id)
+        .then(function(res) {
+          debugger;
+          $scope.contacts = res.data.contacts;
+          $scope.receivedRequests = res.data.receivedRequests;
+        }, function(err) {
+          console.log(err);
+        });
     };
 
     $scope.addContact = function(contact) {

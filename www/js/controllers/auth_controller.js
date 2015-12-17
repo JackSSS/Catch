@@ -32,7 +32,7 @@ module.exports = function(app) {
       $http.defaults.headers.common.token = $scope.token;
       $http.get('/api/user')
         .then(function(res) {
-          $scope.currentUser = res.data.username;
+          $scope.currentUser = res.data;
         }, function(err) {
           console.log(err);
         });

@@ -25,10 +25,9 @@ module.exports = function(app) {
     };
 
     $scope.add = function(contact) {
-      $http.post('/api/contacts/add', {userId: currentUser.id, contactId: contact._id})
+      $http.post('/api/contacts/add', {userId: $scope.currentUser._id, contactId: contact._id})
         .then(function(res) {
           console.log(res.data)
-          // $scope.contacts = res.push();
         }, function(err) {
           console.log(err.data);
         });

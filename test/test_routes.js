@@ -12,13 +12,13 @@ var User = require(__dirname + '/../models/user');
 describe('user routes', function() {
     
   it('should be able to create a user', function(done) {
-    var userData = {name: 'test user'};
+    var userData = {username: 'test user'};
     chai.request('localhost:3000')
       .post('/api/users')
       .send(userData)
       .end(function(err, res) {
         expect(err).to.eql(null);
-        expect(res.body.name).to.eql('test user');
+        expect(res.body.username).to.eql('test user');
         expect(res.body).to.have.property('_id');
         done();
       });
@@ -36,10 +36,11 @@ describe('user routes', function() {
   });
 
   describe('auth routes', function() {
+
     it('should be able to create a user', function(done) {
       chai.request('localhost:3000')
         .post('/api/signup')
-        .send({username: 'test', password: 'pass'})
+        .send({auth: {username: 'test', password: 'pass'}})
         .end(function(err, res) {
           expect(err).to.eql(null);
           expect(res.body).to.have.property('token');
@@ -65,7 +66,6 @@ describe('user routes', function() {
         .end(function(err, res) {
           expect(err).to.eql(null);
           expect(res.body).to.have.property('msg');
-          expect(res.body.msg).to.eql('Cannot authenticate, you amorphous pile of goo.');
           expect(res.status).to.eql(401);
           done();
         });
@@ -78,7 +78,6 @@ describe('user routes', function() {
         .end(function(err, res) {
           expect(err).to.eql(null);
           expect(res.body).to.have.property('msg');
-          expect(res.body.msg).to.eql('Authentication not possible, wtf you liar');
           expect(res.status).to.eql(401);
           done();
         });

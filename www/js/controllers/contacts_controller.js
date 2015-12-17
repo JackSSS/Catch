@@ -16,7 +16,7 @@ module.exports = function(app) {
 
     $scope.acceptRequest = function(contact) {
       console.log(contact);
-      $http.post('http://localhost:3000/api/contacts/confirm', {
+      $http.post(SERVER_ADDRESS + '/api/contacts/confirm', {
         userId: $scope.currentUser.id,
         requesterId: contact._id
       })

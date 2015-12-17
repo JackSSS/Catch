@@ -15,7 +15,7 @@ module.exports = function(app) {
     };
 
     $scope.doSearch = function(search) {
-      $http.post('/api/contacts/search', {search})
+      $http.post('/api/contacts/search', {search: search})
         .then(function(res) {
           $scope.contacts = res.data;
         }, function(err) {
@@ -25,7 +25,7 @@ module.exports = function(app) {
     };
 
     $scope.add = function(contact) {
-      $http.post('/api/contacts/add', {userId: $scope.currentUser._id, contactId: contact._id})
+      $http.post('/api/contacts/add', {userId: $scope.currentUser.id, contactId: contact._id})
         .then(function(res) {
           console.log(res.data)
         }, function(err) {

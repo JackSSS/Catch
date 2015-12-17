@@ -2,6 +2,8 @@ module.exports = function(app) {
   app.controller('SearchController', ['$scope', '$http', function($scope, $http) {
     $scope.contacts = [];
     $scope.search = '';
+    $scope.userId = '';
+    $scope.contactId = '';
 
     $scope.getAll = function() {
      $http.get('/api/users')
@@ -22,15 +24,16 @@ module.exports = function(app) {
 
     };
 
-    // $scope.add = function(contact) {
-    //   $http.post('/api/contacts/add', contact)
-    //     .then(function(res) {
-    //       $scope.contacts.send(userId, contactId);
-    //     }, function(err) {
-    //       console.log(err.data);
-    //     });
+    $scope.add = function(contact) {
+      $http.post('/api/contacts/add', {userId: currentUser.id, contactId: contact._id})
+        .then(function(res) {
+          console.log(res.data)
+          // $scope.contacts = res.push();
+        }, function(err) {
+          console.log(err.data);
+        });
 
-    // };
+    };
 
     // $scope.confirm = function(contact) {
     //   $http.post('/api/contacts/request', contact)

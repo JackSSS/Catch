@@ -7,7 +7,7 @@
     </form>
     <div class="item item-icon-right" data-ng-repeat="contact in contacts">
       {{contact.username}}
-      <i class="icon ion-android-person-add"></i>
+      <i class="icon ion-android-person-add" ng-click="add(contact)"></i>
     </div>
   </ion-content>
 </ion-view>

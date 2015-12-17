@@ -2,10 +2,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var User = require(__dirname + '/../models/user');
 var handleServerError = require(__dirname + '/../lib/handle_server_error');
+var decodeUser = require(__dirname + '/../lib/decrypt_user');
 
 var usersRouter = module.exports = exports = express.Router();
 
-usersRouter.get('/users', function(req, res) {
+usersRouter.get('/users', decodeUser, function(req, res) {
   User.find({}, function(err, data) {
     if (err) return handleServerError(err, res);
     res.json(data);
@@ -30,7 +31,7 @@ usersRouter.put('/users/:id', bodyParser.json(), function(req, res) {
   });
 });
 
-usersRouter.delete('/users/:id', function(req, res) {
+usersRouter.delete('/users/:id', decodeUser, function(req, res) {
   User.remove({_id: req.params.id}, function(err) {
     if (err) return handleServerError(err, res);
     res.json({msg:'Delete successful!'});

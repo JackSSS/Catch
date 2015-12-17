@@ -831,39 +831,22 @@
 
 	module.exports = function(app) {
 	  app.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-	    var data = [{ username: "jack"}, {username: "motley"}]
-	    var search = [{ username: "jack"}, {username: "motley"}]
 	    $scope.contacts = [];
-<<<<<<< HEAD
+	    $scope.search = '';
 
 	    $scope.getAll = function() {
-	     $http.get('/api/contacts/:userId')
-	        .then(function(res){
+	     $http.get('/api/users')
+	        .then(function(res) {
 	          $scope.contacts = res.data
 	          }, function(err) {
 	            console.log(err.data)
 	          });
 	    };
 
-	    $scope.search = function(contact) {
-	      $http.post('/api/contacts/search', contact)
+	    $scope.doSearch = function() {
+	      $http.post('/api/contacts/search', {search: $scope.search.trim()})
 	        .then(function(res) {
-	          $scope.contacts.search(res.data);
-=======
-
-	    $scope.getAll = function() {
-	     $http.get('/api/contacts/:userId')
-	        .then(function(res){
-	          $scope.contacts = res.data
-	          }, function(err) {
-	            console.log(err.data)
-	          });
-	    };
-
-	    $scope.search = function(contact) {
-	      $http.post('/api/contacts/search', contact)
-	        .then(function(res) {
-	          $scope.contacts.search(res.data);
+	          $scope.contacts = res.data;
 	        }, function(err) {
 	          console.log(err.data)
 	        });
@@ -874,26 +857,12 @@
 	      $http.post('/api/contacts/add', contact)
 	        .then(function(res) {
 	          $scope.contacts.send(userId, contactId);
->>>>>>> d8864eeade2f04f68be801d7678ecc7f5119987e
 	        }, function(err) {
 	          console.log(err.data)
 	        });
 
 	    };
 
-<<<<<<< HEAD
-	    $scope.add = function(contact) {
-	      $http.post('/api/contacts/add', contact)
-	        .then(function(res) {
-	          $scope.contacts.send(userId, contactId);
-	        }, function(err) {
-	          console.log(err.data)
-	        });
-
-	    };
-
-=======
->>>>>>> d8864eeade2f04f68be801d7678ecc7f5119987e
 	    $scope.confirm = function(contact) {
 	      $http.post('/api/contacts/request', contact)
 	        .then(function(res) {

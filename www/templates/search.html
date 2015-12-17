@@ -1,15 +1,15 @@
 <ion-view view-title="S E A R C H">
-  <ion-content ng-init="getAll()">
-    <label class="item item-input">
+  <ion-content>
+    <label ng-submit="doSearch()" class="item item-input">
       <i class="icon ion-search placeholder-icon"></i>
-      <input ng-submit="search(user)" type="search" placeholder="Search">
+      <input ng-model="search" type="search" placeholder="Search">
     </label>
-      <ion-list>
-        <ion-item ng-repeat="user in users">
+      <ion-list ng-init="getAll()">
+        <ion-item ng-repeat="contact in contacts">
         <div data-ng-if="!editing" class="item item-button-right">
-          <h2>{{user.username}}</h2>
+          <h2>{{contact.username}}</h2>
           <div class="button-bar">
-            <button ng-click="add(user)" class="button button-positive">
+            <button ng-click="add(contact)" class="button button-positive">
               <i class="icon ion-android-add-circle"></i>
             </button>
           </div>

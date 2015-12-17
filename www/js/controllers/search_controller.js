@@ -1,22 +1,21 @@
 module.exports = function(app) {
   app.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-    var data = [{ username: "jack"}, {username: "motley"}]
-    var search = [{ username: "jack"}, {username: "motley"}]
     $scope.contacts = [];
+    $scope.search = '';
 
     $scope.getAll = function() {
-     $http.get('/api/contacts/:userId')
-        .then(function(res){
+     $http.get('/api/users')
+        .then(function(res) {
           $scope.contacts = res.data
           }, function(err) {
             console.log(err.data)
           });
     };
 
-    $scope.search = function(contact) {
-      $http.post('/api/contacts/search', contact)
+    $scope.doSearch = function() {
+      $http.post('/api/contacts/search', {search: $scope.search.trim()})
         .then(function(res) {
-          $scope.contacts.search(res.data);
+          $scope.contacts = res.data;
         }, function(err) {
           console.log(err.data)
         });

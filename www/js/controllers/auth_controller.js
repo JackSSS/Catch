@@ -36,7 +36,6 @@ module.exports = function(app) {
         }, function(err) {
           console.log(err);
         });
-
     };
 
     $scope.authenticate = function(user) {
@@ -45,12 +44,9 @@ module.exports = function(app) {
       if (!(user.auth.username && user.auth.password))
         return $scope.authErrors.push('Please enter username and password.');
 
-      console.log('Authenticating', $scope.user);
       $ionicLoading.show({
         template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Authenticating...'
       });
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
 
       if($scope.signup) {
         $http.post('/api/signup', user)

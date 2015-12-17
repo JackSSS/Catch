@@ -874,11 +874,9 @@
 	          });
 	    };
 
-	    $scope.doSearch = function() {
-	      debugger;
-	      $http.post('/api/contacts/search', {search: $scope.search}) // function ends here.
+	    $scope.doSearch = function(search) {
+	      $http.post('/api/contacts/search', {search})
 	        .then(function(res) {
-	          debugger;
 	          $scope.contacts = res.data;
 	        }, function(err) {
 	          console.log(err.data);

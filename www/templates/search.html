@@ -1,10 +1,12 @@
 <ion-view view-title="S E A R C H">
   <ion-content>
-    <form class="item item-input">
+    <form class="item item-input" ng-submit="doSearch(search)">
       <i class="icon ion-search placeholder-icon"></i>
-      <input ng-model="search" type="search" placeholder="Search">
-      <button ng-click="doSearch()" type="submit" class="btn btn-default icon-default icon-search">Submit</button>
+      <input ng-model="search" type="text" placeholder="Search">
+      <button type="submit" class="btn btn-default icon-default icon-search">Submit</button>
     </form>
-
+    <ul>
+    	<li data-ng-repeat="contact in contacts">{{contact.username}}</li>
+    </ul>
   </ion-content>
 </ion-view>

@@ -43,9 +43,9 @@ gulp.task('build:test', function() {
 gulp.task('test:mocha', function() {
   return gulp.src(paths.testBackend, {read: false})
     .pipe(mocha({reporter: 'nyan'}))
-    .once('error', function() {
-      process.exit(1);
-    })
+    // .once('error', function() {
+    //   process.exit(1);
+    // })
     .once('end', function() {
       process.exit();
     });

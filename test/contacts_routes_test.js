@@ -46,6 +46,19 @@ describe('contacts router', function() {
     });
   });
 
+  it('should get all contacts and pending', function(done) {
+    getUsers(function(users) {
+      chai.request('localhost:3000')
+        .get('/api/contacts/' + users[0]._id)
+        .end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(Array.isArray(res.body.contacts)).to.eql(true);
+          expect(Array.isArray(res.body.receivedRequests)).to.eql(true);
+          done();
+        });
+    });
+  });
+
   it('should search contacts', function(done) {
     var search = '1';
     chai.request('localhost:3000')

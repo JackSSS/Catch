@@ -13,7 +13,7 @@ module.exports = function(app) {
     };
 
     $scope.doSearch = function(search) {
-      $http.post('/api/contacts/search', {search})
+      $http.post('/api/contacts/search', {search: search})
         .then(function(res) {
           $scope.contacts = res.data;
         }, function(err) {

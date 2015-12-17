@@ -51,7 +51,7 @@
 	var catchApp = angular.module('catch', ['ionic', 'ngCordova', 'ngCookies', 'base64']);
 
 	__webpack_require__(4)(catchApp);
-	__webpack_require__(8)(catchApp);
+	__webpack_require__(9)(catchApp);
 
 
 	catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
@@ -113,7 +113,8 @@
 	      url: '/search',
 	      views: {
 	        'homeMenuContent': {
-	          templateUrl: 'templates/search.html'
+	          templateUrl: 'templates/search.html',
+	          controller: 'SearchController'
 	        }
 	      }
 	    })
@@ -665,6 +666,7 @@
 	  __webpack_require__(5)(app);
 	  __webpack_require__(6)(app);
 	  __webpack_require__(7)(app);
+	  __webpack_require__(8)(app);
 	};
 
 
@@ -802,7 +804,6 @@
 	    // $scope.errors = [];
 
 	    $scope.getAll = function() {
-	      debugger;
 	      $scope.contacts = data;
 	    };
 
@@ -826,17 +827,70 @@
 
 /***/ },
 /* 8 */
+/***/ function(module, exports) {
+
+	module.exports = function(app) {
+	  app.controller('SearchController', ['$scope', '$http', function($scope, $http) {
+	    var data = [{ username: "jack"}, {username: "motley"}]
+	    var search = [{ username: "jack"}, {username: "motley"}]
+	    $scope.contacts = [];
+
+	    $scope.getAll = function() {
+	     $http.get('/api/contacts/:userId')
+	        .then(function(res){
+	          $scope.contacts = res.data
+	          }, function(err) {
+	            console.log(err.data)
+	          });
+	    };
+
+	    $scope.search = function(contact) {
+	      $http.post('/api/contacts/search', contact)
+	        .then(function(res) {
+	          $scope.contacts.search(res.data);
+	        }, function(err) {
+	          console.log(err.data)
+	        });
+
+	    };
+
+	    $scope.add = function(contact) {
+	      $http.post('/api/contacts/add', contact)
+	        .then(function(res) {
+	          $scope.contacts.send(userId, contactId);
+	        }, function(err) {
+	          console.log(err.data)
+	        });
+
+	    };
+
+	    $scope.confirm = function(contact) {
+	      $http.post('/api/contacts/request', contact)
+	        .then(function(res) {
+	          $scope.contacts.confirm(contactId, requesterId);
+	        }, function(err) {
+	          console.log(err.data)
+	        });
+
+	    };
+
+	  }]);
+	};
+
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(app) {
-	  __webpack_require__(9)(app);
 	  __webpack_require__(10)(app);
+	  __webpack_require__(11)(app);
 	};
 
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
@@ -855,10 +909,10 @@
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var GoogleMapsLoader = __webpack_require__(11);
+	var GoogleMapsLoader = __webpack_require__(12);
 
 	function createMap(google, lat, lng, zoom, element) {
 	  var myLatLng = new google.maps.LatLng(lat, lng);
@@ -896,7 +950,7 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root, factory) {

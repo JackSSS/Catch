@@ -1,5 +1,20 @@
-<ion-view view-title="Catch">
-  <ion-content>
-    <h1>Search</h1>
+<ion-view view-title="S E A R C H">
+  <ion-content ng-init="getAll()">
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input ng-submit="search(user)" type="search" placeholder="Search">
+    </label>
+      <ion-list>
+        <ion-item ng-repeat="user in users">
+        <div data-ng-if="!editing" class="item item-button-right">
+          <h2>{{user.username}}</h2>
+          <div class="button-bar">
+            <button ng-click="add(user)" class="button button-positive">
+              <i class="icon ion-android-add-circle"></i>
+            </button>
+          </div>
+        </div>
+        </ion-item>
+      </ion-list>
   </ion-content>
 </ion-view>

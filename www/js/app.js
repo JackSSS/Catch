@@ -67,7 +67,8 @@ catchApp.config(function($stateProvider, $urlRouterProvider) {
       url: '/search',
       views: {
         'homeMenuContent': {
-          templateUrl: 'templates/search.html'
+          templateUrl: 'templates/search.html',
+          controller: 'SearchController'
         }
       }
     })

@@ -1,6 +1,7 @@
 module.exports = function(app) {
 
-  app.controller('AuthCtrl', function($scope, $timeout, $location, $ionicLoading, $http, $cookies, $base64) {
+  app.controller('AuthCtrl',
+    function($scope, $timeout, $location, $ionicLoading, $http, $cookies, $base64) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -8,6 +9,22 @@ module.exports = function(app) {
     // listen for the $ionicView.enter event:
     //$scope.$on('$ionicView.enter', function(e) {
     //});
+
+    function isLoggedIn() {
+      if ($cookies.get('token'))
+        return true;
+      else
+        return false;
+    }
+
+    function checkAuth() {
+      if (!(isLoggedIn()))
+        $location.path('/auth');
+    }
+
+    $scope.$on('$ionicView.enter', function(e) {
+      checkAuth();
+    });
 
     // Form data for the login modal
     $scope.authErrors = [];
@@ -32,7 +49,6 @@ module.exports = function(app) {
       $http.defaults.headers.common.token = $scope.token;
       $http.get('/api/user')
         .then(function(res) {
-          debugger;
           $scope.currentUser = res.data;
         }, function(err) {
           console.log(err);

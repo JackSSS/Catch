@@ -9,6 +9,10 @@ module.exports = function(app) {
 	    headers: {
 	    	token: cookieToken
 	    }
+	 	}).then(function(res) {
+	 		console.log('/api/user response = ' + res);
+	 	}, function(err) {
+	 		console.log('/api/user error = ' + err);
 	 	});
 
 		$scope.showAlert = function() {

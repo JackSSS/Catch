@@ -1,8 +1,8 @@
 <ion-view view-title="S E A R C H">
   <ion-content>
-    <form class="item item-input" ng-submit="doSearch(search)">
+    <form class="item item-input" ng-submit="doSearch(search.query)">
       <i class="icon ion-search placeholder-icon"></i>
-      <input ng-model="search" type="text" placeholder="Search">
+      <input ng-model="search.query" type="text" placeholder="Search">
       <button type="submit" class="btn btn-default icon-default icon-search">Submit</button>
     </form>
     <div class="item item-icon-right" data-ng-repeat="contact in contacts">
@@ -10,4 +10,5 @@
       <i class="icon ion-android-person-add" ng-click="add(contact)"></i>
     </div>
   </ion-content>
+  <div error-list errors="errors" ng-if="errors.length > 0"></div>
 </ion-view>

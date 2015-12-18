@@ -1,48 +1,37 @@
 module.exports = function(app) {
-  app.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-    $scope.contacts = [];
-    $scope.search = '';
-    $scope.userId = '';
-    $scope.contactId = '';
+  app.controller('SearchController', ['$scope', '$http', 'Contacts', '$ionicPopup',
+    function($scope, $http, Contacts, $ionicPopup) {
 
-    $scope.getAll = function() {
-     $http.get('/api/users')
-        .then(function(res) {
-          $scope.contacts = res.data;
-          }, function(err) {
-            console.log(err.data);
-          });
-    };
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.contacts = [];
+      $scope.query = '';
+      $scope.userId = '';
+      $scope.contactId = '';
+      $scope.errors = [];
+    });
 
-    $scope.doSearch = function(search) {
-      $http.post('/api/contacts/search', {search: search})
-        .then(function(res) {
-          $scope.contacts = res.data;
-        }, function(err) {
-          console.log(err.data);
-        });
+    $scope.doSearch = function(param) {
+      Contacts.search(param, function(err, data) {
+        if (err) return err;
 
+        if (Array.isArray(data))
+          $scope.contacts = data;
+        else
+          $scope.errors.push(data.msg);
+      });
     };
 
     $scope.add = function(contact) {
-      $http.post('/api/contacts/add', {userId: $scope.currentUser.id, contactId: contact._id})
-        .then(function(res) {
-          console.log(res.data)
-        }, function(err) {
-          console.log(err.data);
+      Contacts.makeRequest($scope.currentUser, contact, function(err, data) {
+        if (err) return err;
+
+        $ionicPopup.alert({
+          title: 'Catch',
+          template: 'Contact request sent to ' + data.contact.username,
+          okType: 'button-dark'
         });
-
+      });
     };
-
-    // $scope.confirm = function(contact) {
-    //   $http.post('/api/contacts/request', contact)
-    //     .then(function(res) {
-    //       $scope.contacts.confirm(contactId, requesterId);
-    //     }, function(err) {
-    //       console.log(err.data);
-    //     });
-
-    // };
 
   }]);
 };

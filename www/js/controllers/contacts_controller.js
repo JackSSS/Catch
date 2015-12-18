@@ -1,57 +1,91 @@
 module.exports = function(app) {
-  app.controller('ContactsController', ['$scope', '$http', function($scope, $http) {
-    var contacts = [
-        {username: 'bill'},
-        {username: 'jill'},
-        {username: 'sarah'},
-        {username: 'jim'}
-    ];
-    var receivedRequests = [
-        {username: 'dan'},
-        {username: 'mark'},
-        {username: 'matt'},
-        {username: 'nick'}
-    ];
-    $scope.contacts = [];
-    $scope.receivedRequests = [];
-    // $scope.errors = [];
+  app.controller('ContactsController', ['$scope', '$http', 'Contacts', '$ionicPopup',
+    function($scope, $http, Contacts, $ionicPopup) {
+
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.contacts = [];
+      $scope.receivedRequests = [];
+      $scope.searchResults = [];
+      $scope.searchParam = '';
+      $scope.errors = [];
+
+      $scope.getAll();
+    });
+
+    $scope.clearSearch = function() {
+      $scope.searchParam = '';
+      $scope.searchResults = [];
+    };
 
     $scope.getAll = function() {
-      $http.get('http://localhost:3000/api/contacts/' + $scope.currentUser.id)
-        .then(function(res) {
-          $scope.contacts = res.data.contacts;
-          $scope.receivedRequests = res.data.receivedRequests;
-        }, function(err) {
-          console.log(err);
-        });
+      Contacts.getAll($scope.currentUser.id, function(err, data) {
+        if (err) return err;
+
+        $scope.contacts = data.contacts;
+        $scope.receivedRequests = data.receivedRequests;
+      });
     };
 
-    $scope.acceptRequest = function(contact) {
-      console.log(contact);
-      $http.post('http://localhost:3000/api/contacts/confirm', {
-        userId: $scope.currentUser.id,
-        requesterId: contact._id
-      })
-        .then(function(res) {
+    $scope.acceptRequest = function(requester) {
+      Contacts.acceptRequest($scope.currentUser, requester, function(err, data) {
+        if (err) return err;
+
+        var alert = $ionicPopup.alert({
+          title: 'Catch',
+          template: 'You are now connected with ' + data.requester.username,
+          okType: 'button-dark'
+        });
+        // when pop closes, clear search results and call getAll
+        alert.then(function(res) {
+          $scope.searchResults = [];
           $scope.getAll();
-        }, function(err) {
-          console.log(err);
         });
+      });
     };
 
-    // $scope.update = function(user) {
-    //   user.editing = false;
-    //   $http.post('/api/user' + user._id, user)
-    //     .then(function(res) {
-    //       $scope.users.push(res.data);
-    //       $push: {contacts:
-    //         {$each: [{user._id: res.data},
-    //           {name: res.data},
-    //           {location: res.data}]
-    //         };
-    //     }, function(err) {
-    //       console.log(err.data)
-    //     });
-    //   };
-    }]);
+    $scope.search = function() {
+      Contacts.search($scope.searchParam, function(err, data) {
+        if (err) return err;
+
+        if (Array.isArray(data)) {
+          $scope.searchResults = data;
+        } else {
+          $scope.searchResults = [];
+          $scope.searchResults[0] = {username: data.msg};
+        }
+      });
+    };
+
+    $scope.makeRequest = function(contact) {
+      if (contact._id === $scope.currentUser.id)
+        return $ionicPopup.alert({
+          title: 'Catch',
+          template: 'Sorry! You can\'t connect with yourself.',
+          okType: 'button-dark'
+        });
+
+      if ($scope.currentUser.contacts.indexOf(contact._id) !== -1)
+        return $ionicPopup.alert({
+          title: 'Catch',
+          template: 'You are already connected with ' + contact.username,
+          okType: 'button-dark'
+        });
+
+      Contacts.makeRequest($scope.currentUser, contact, function(err, data) {
+        if (err) return err;
+
+        var alert = $ionicPopup.alert({
+          title: 'Catch',
+          template: 'Contact request sent to ' + data.contact.username,
+          okType: 'button-dark'
+        });
+        // when pop closes, clear search results and call getAll
+        alert.then(function(res) {
+          $scope.searchResults = [];
+          $scope.getAll();
+        });
+      });
+    };
+
+  }]);
 };

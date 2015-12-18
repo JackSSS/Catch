@@ -1,6 +1,6 @@
 <ion-view view-title="C O N T A C T S">
   <ion-content>
-    <ion-list ng-if="searchResults.length < 1">
+    <ion-list ng-if="searchResults.length <= 0">
       <div class="item" ng-repeat="contact in contacts">
         {{contact.username}}
       </div>
@@ -16,7 +16,7 @@
 
     </ion-list>
 
-    <ion-list ng-if="searchResults.length > 1">
+    <ion-list ng-if="searchResults.length > 0">
       <div class="item" ng-repeat="result in searchResults">
         {{result.username}}
       </div>

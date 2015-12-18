@@ -37,10 +37,12 @@ module.exports = function(app) {
       Contacts.search($scope.searchParam, function(err, data) {
         if (err) return err;
 
-        if (Array.isArray(data))
+        if (Array.isArray(data)) {
           $scope.searchResults = data;
-        else
-          $scope.errors.push(data.msg);
+        } else {
+          $scope.searchResults = [];
+          $scope.searchResults[0] = {username: data.msg};
+        }
       });
     };
 

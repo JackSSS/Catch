@@ -10,6 +10,7 @@ module.exports = function(app) {
     //$scope.$on('$ionicView.enter', function(e) {
     //});
 
+
     function isLoggedIn() {
       if ($cookies.get('token'))
         return true;
@@ -56,6 +57,7 @@ module.exports = function(app) {
     };
 
     $scope.authenticate = function(user) {
+      user.deviceId = $rootScope.deviceId;
       $scope.authErrors = [];
 
       if (!(user.auth.username && user.auth.password))
@@ -79,8 +81,9 @@ module.exports = function(app) {
           });
       } else {
         $http({
-          method: 'GET',
+          method: 'POST',
           url: '/api/signin',
+          data: {deviceId: 'user.deviceId'},
           headers: {
             'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)
           }

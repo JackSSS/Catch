@@ -7,13 +7,17 @@ module.exports = function(app) {
       $scope.query = '';
       $scope.userId = '';
       $scope.contactId = '';
+      $scope.errors = [];
     });
 
     $scope.doSearch = function(param) {
       Contacts.search(param, function(err, data) {
         if (err) return err;
 
-        $scope.contacts = data;
+        if (Array.isArray(data))
+          $scope.contacts = data;
+        else
+          $scope.errors.push(data.msg);
       });
     };
 

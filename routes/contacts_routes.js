@@ -37,7 +37,7 @@ contactsRouter.get('/contacts/:id', function(req, res) {
   });
 });
 
-contactsRouter.post('/contacts/add', jsonParser, function(req, res) {
+contactsRouter.put('/contacts/add', jsonParser, function(req, res) {
   var userId = req.body.userId;
   var contactId = req.body.contactId;
 
@@ -63,7 +63,7 @@ contactsRouter.post('/contacts/add', jsonParser, function(req, res) {
   updateContact(updateUser);
 });
 
-contactsRouter.post('/contacts/confirm', jsonParser, function(req, res) {
+contactsRouter.put('/contacts/confirm', jsonParser, function(req, res) {
   var userId = req.body.userId;
   var requesterId = req.body.requesterId;
 
@@ -99,6 +99,9 @@ contactsRouter.post('/contacts/search', jsonParser, function(req, res) {
   var regex = new RegExp(req.body.search);
   User.find({$or: [{username: regex}, {name: regex}]}, function(err, results) {
     if (err) return handleError(err, res);
+
+    if (results.length < 1) return res.json({msg: 'no results found'});
+
     res.json(results);
   });
 });

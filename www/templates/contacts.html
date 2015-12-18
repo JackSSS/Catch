@@ -1,6 +1,6 @@
 <ion-view view-title="C O N T A C T S">
   <ion-content>
-    <ion-list>
+    <ion-list ng-if="searchResults.length <= 0">
       <div class="item" ng-repeat="contact in contacts">
         {{contact.username}}
       </div>
@@ -15,5 +15,20 @@
       </div>
 
     </ion-list>
+
+    <ion-list ng-if="searchResults.length > 0">
+      <div class="item item-icon-right" ng-repeat="result in searchResults">
+        {{result.username}}
+        <i class="icon ion-android-person-add" ng-click="makeRequest(result)"></i>
+      </div>
+    </ion-list>
+
   </ion-content>
+  <form class="bar bar-footer item-input-inset" ng-submit="search()">
+    <label class="item-input-wrapper">
+      <i class="icon icon-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Search for new contacts" ng-model="searchParam">
+    </label>
+    <button type="button" class="button button-clear" ng-click="clearSearch()">Cancel</button>
+  </form>
 </ion-view>

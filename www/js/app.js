@@ -4,9 +4,10 @@ var angular = window.angular;
 
 var catchApp = angular.module('catch', ['ionic', 'ngCordova', 'ngCookies', 'base64']);
 
+require('./services/services')(catchApp);
 require('./controllers/controllers')(catchApp);
 require('./directives/directives')(catchApp);
-
+require('./routes')(catchApp);
 
 catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -104,3 +105,4 @@ catchApp.config(function($stateProvider, $urlRouterProvider) {
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/auth');
 });
+

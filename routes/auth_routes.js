@@ -64,7 +64,8 @@ authRouter.get('/signin', basicHttp, function(req, res) {
 	});
 });
 
-// Requests to /user should contain a token in either the headers or body - otherwise this will reject with a 401
+// Requests to /user should contain a token in either the headers or body - 
+// otherwise this will reject with a 401
 authRouter.get('/user', decryptUser, function(req, res) {
 	res.json({
 		username: req.user.username,

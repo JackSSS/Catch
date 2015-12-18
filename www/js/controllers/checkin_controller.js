@@ -1,7 +1,15 @@
 module.exports = function(app) {
-  app.controller('CheckinCtrl', ['$scope', '$http', '$ionicLoading', '$ionicPopup', 
-  function($scope, $http, $ionicLoading, $ionicPopup) {
- 		$scope.lastUpdate = $http.get('/api/user');
+  app.controller('CheckinCtrl', ['$scope', '$http', '$ionicLoading', '$ionicPopup', '$cookies',
+  function($scope, $http, $ionicLoading, $ionicPopup, $cookies) {
+  	var cookieToken = $cookies.get('token');
+
+	 	$scope.lastUpdate = $http({
+	    url: 'api/user', 
+	    method: "GET",
+	    headers: {
+	    	token: cookieToken
+	    }
+	 	});
 
 		$scope.showAlert = function() {
 			var dateNow = new Date();

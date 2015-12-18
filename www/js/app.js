@@ -2,7 +2,7 @@ require('angular-cookies');
 require('angular-base64');
 var angular = window.angular;
 
-var catchApp = angular.module('catch', ['ionic','ionic.service.core', 'ngCordova', 'ngCookies', 'base64']);
+var catchApp = angular.module('catch', ['ionic', 'ngCordova', 'ngCookies', 'base64']);
 
 require('./services/services')(catchApp);
 require('./controllers/controllers')(catchApp);
@@ -29,6 +29,7 @@ catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
 
     push.register(function(token) {
       console.log("Device token:",token.token);
+      $rootScope.deviceId = token.token;
     });
 
     var posOptions = {

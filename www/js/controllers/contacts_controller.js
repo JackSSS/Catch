@@ -14,6 +14,7 @@ module.exports = function(app) {
 
     $scope.clearSearch = function() {
       $scope.searchParam = '';
+      $scope.searchResults = [];
     };
 
     $scope.getAll = function() {

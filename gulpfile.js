@@ -31,13 +31,11 @@ gulp.task('build', function() {
 });
 
 gulp.task('build:test', function() {
-  return gulp.src('test/test_entry.js')
-    .pipe(webpack({
-      output: {
-        filename: 'test_bundle.js'
-      }
-    }))
-    .pipe(gulp.dest('test/'));
+  return gulp.src('test/test_entry.js').pipe(webpack({
+    output: {
+      filename: 'test_bundle.js'
+    }
+  })).pipe(gulp.dest('test/'));
 });
 
 gulp.task('test:mocha', function() {
@@ -98,7 +96,6 @@ gulp.task('test:jshint', function() {
     }))
     .pipe(jshint.reporter('jshint-stylish'));
 });
-
 
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {

@@ -1,4 +1,4 @@
-require(__dirname + '/../www/js/app');
+require(__dirname + '/../www/js/bundle');
 require('angular-mocks');
 
 describe('Contacts Service', function() {
@@ -25,13 +25,14 @@ describe('Contacts Service', function() {
       $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('should get all contacts', function() {
+    it('should get all contacts', function(done) {
       var userId = '123';
       $httpBackend.expectGET('http://localhost:3000/api/contacts/123')
         .respond(200, []);
       Contacts.getAll(userId, function(err, data) {
         expect(err).toBe(null);
-        expect(Array.isArray(data)).toBe(true);
+        expect(Array.isArray(data)).toBe(false);
+        done();
       });
       $httpBackend.flush();
     });

@@ -1,3 +1,0 @@
-language: node_js # specify your language
-node_js: # specify options for your language
-- '0.10

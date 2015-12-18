@@ -4,6 +4,7 @@ var angular = window.angular;
 
 var catchApp = angular.module('catch', ['ionic', 'ngCordova', 'ngCookies', 'base64']);
 
+require('./services/services')(catchApp);
 require('./controllers/controllers')(catchApp);
 require('./directives/directives')(catchApp);
 

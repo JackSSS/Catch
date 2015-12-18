@@ -1,5 +1,6 @@
 module.exports = function(app) {
-  app.controller('ContactsController', ['$scope', '$http', function($scope, $http) {
+  app.controller('ContactsController', ['$scope', '$http', 'Contacts',
+    function($scope, $http, Contacts) {
 
     $scope.contacts = [];
     $scope.receivedRequests = [];
@@ -9,26 +10,20 @@ module.exports = function(app) {
     });
 
     $scope.getAll = function() {
-      $http.get(SERVER_ADDRESS + '/api/contacts/' + $scope.currentUser.id)
-        .then(function(res) {
-          $scope.contacts = res.data.contacts;
-          $scope.receivedRequests = res.data.receivedRequests;
-        }, function(err) {
-          console.log(err);
-        });
+      Contacts.getAll($scope.currentUser.id, function(err, data) {
+        if (err) return err;
+
+        $scope.contacts = data.contacts;
+        $scope.receivedRequests = data.receivedRequests;
+      });
     };
 
-    $scope.acceptRequest = function(contact) {
-      console.log(contact);
-      $http.post(SERVER_ADDRESS + '/api/contacts/confirm', {
-        userId: $scope.currentUser.id,
-        requesterId: contact._id
-      })
-        .then(function(res) {
-          $scope.getAll();
-        }, function(err) {
-          console.log(err);
-        });
+    $scope.acceptRequest = function(requester) {
+      Contacts.acceptRequest($scope.currentUser, requester, function(err, data) {
+        if (err) return err;
+
+        $scope.getAll();
+      });
     };
 
   }]);

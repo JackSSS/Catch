@@ -30,7 +30,16 @@ module.exports = function(app) {
       Contacts.acceptRequest($scope.currentUser, requester, function(err, data) {
         if (err) return err;
 
-        $scope.getAll();
+        var alert = $ionicPopup.alert({
+          title: 'Catch',
+          template: 'You are now connected with ' + data.requester.username,
+          okType: 'button-dark'
+        });
+        // when pop closes, clear search results and call getAll
+        alert.then(function(res) {
+          $scope.searchResults = [];
+          $scope.getAll();
+        });
       });
     };
 

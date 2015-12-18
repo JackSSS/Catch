@@ -21,7 +21,7 @@ module.exports = function(app) {
     };
 
     contacts.acceptRequest = function(user, requester, cb) {
-      $http.post(SERVER_ADDRESS + '/api/contacts/confirm', {
+      $http.put(SERVER_ADDRESS + '/api/contacts/confirm', {
         userId: user.id,
         requesterId: requester._id
       })
@@ -34,7 +34,7 @@ module.exports = function(app) {
     };
 
     contacts.makeRequest = function(user, contact, cb) {
-      $http.post(SERVER_ADDRESS + '/api/contacts/add', {
+      $http.put(SERVER_ADDRESS + '/api/contacts/add', {
         userId: user.id,
         contactId: contact._id
       })

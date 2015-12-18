@@ -2,7 +2,7 @@ require('angular-cookies');
 require('angular-base64');
 var angular = window.angular;
 
-var catchApp = angular.module('catch', ['ionic', 'ngCordova', 'ngCookies', 'base64']);
+var catchApp = angular.module('catch', ['ionic','ionic.service.core', 'ngCordova', 'ngCookies', 'base64']);
 
 require('./services/services')(catchApp);
 require('./controllers/controllers')(catchApp);
@@ -23,6 +23,14 @@ catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
       StatusBar.styleDefault();
     }
 
+    var push = new Ionic.Push({
+      "debug": true
+    });
+
+    push.register(function(token) {
+      console.log("Device token:",token.token);
+    });
+
     var posOptions = {
       enableHighAccuracy: true,
       timeout: 20000
@@ -35,3 +43,14 @@ catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
     });
   });
 });
+
+// var push = new Ionic.Push({
+//   "debug": true,
+//   "onNotification": function(notification) {
+//     var payload = notification.payload;
+//     console.log(notification, payload);
+//   },
+//   "onRegister": function(data) {
+//     console.log(data.token);
+//   }
+// });

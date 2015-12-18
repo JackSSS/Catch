@@ -1,7 +1,7 @@
 module.exports = function(app) {
 
   app.controller('AuthCtrl',
-    function($scope, $timeout, $location, $ionicLoading, $http, $cookies, $base64) {
+    function($rootScope, $scope, $timeout, $location, $ionicLoading, $http, $cookies, $base64) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.

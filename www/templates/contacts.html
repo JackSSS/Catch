@@ -17,8 +17,9 @@
     </ion-list>
 
     <ion-list ng-if="searchResults.length > 0">
-      <div class="item" ng-repeat="result in searchResults">
+      <div class="item item-icon-right" ng-repeat="result in searchResults">
         {{result.username}}
+        <i class="icon ion-android-person-add" ng-click="makeRequest(result)"></i>
       </div>
     </ion-list>
 

@@ -46,14 +46,33 @@ module.exports = function(app) {
       });
     };
 
-    $scope.add = function(contact) {
+    $scope.makeRequest = function(contact) {
+      if (contact._id === $scope.currentUser.id)
+        return $ionicPopup.alert({
+          title: 'Catch',
+          template: 'Sorry! You can\'t connect with yourself.',
+          okType: 'button-dark'
+        });
+
+      if ($scope.currentUser.contacts.indexOf(contact._id) !== -1)
+        return $ionicPopup.alert({
+          title: 'Catch',
+          template: 'You are already connected with ' + contact.username,
+          okType: 'button-dark'
+        });
+
       Contacts.makeRequest($scope.currentUser, contact, function(err, data) {
         if (err) return err;
 
-        $ionicPopup.alert({
+        var alert = $ionicPopup.alert({
           title: 'Catch',
           template: 'Contact request sent to ' + data.contact.username,
           okType: 'button-dark'
+        });
+        // when pop closes, clear search results and call getAll
+        alert.then(function(res) {
+          $scope.searchResults = [];
+          $scope.getAll();
         });
       });
     };

@@ -35,6 +35,29 @@ catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
   });
 });
 
+catchApp.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    var push = new Ionic.Push({
+      "debug": true
+    });
+
+    push.register(function(token) {
+      console.log("Device token:",token.token);
+    });
+  });
+})
+
+// var push = new Ionic.Push({
+//   "debug": true,
+//   "onNotification": function(notification) {
+//     var payload = notification.payload;
+//     console.log(notification, payload);
+//   },
+//   "onRegister": function(data) {
+//     console.log(data.token);
+//   }
+// });
+
 catchApp.config(function($stateProvider, $urlRouterProvider) {
 
   // routing for login and signup

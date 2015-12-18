@@ -1,17 +1,10 @@
 module.exports = function(app) {
   app.controller('ContactsController', ['$scope', '$http', function($scope, $http) {
-    var contacts = [
-        {username: 'bill'},
-        {username: 'jill'},
-        {username: 'sarah'},
-        {username: 'jim'}
-    ];
-    var receivedRequests = [
-        {username: 'dan'},
-        {username: 'mark'},
-        {username: 'matt'},
-        {username: 'nick'}
-    ];
+
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.getAll();
+    });
+
     $scope.contacts = [];
     $scope.receivedRequests = [];
     // $scope.errors = [];

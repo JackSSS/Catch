@@ -1,9 +1,12 @@
 module.exports = function(app) {
   app.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-    $scope.contacts = [];
-    $scope.search = '';
-    $scope.userId = '';
-    $scope.contactId = '';
+
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.contacts = [];
+      $scope.query = '';
+      $scope.userId = '';
+      $scope.contactId = '';
+    });
 
     $scope.getAll = function() {
      $http.get('/api/users')

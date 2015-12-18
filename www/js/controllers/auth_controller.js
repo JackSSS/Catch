@@ -29,7 +29,7 @@ module.exports = function(app) {
     // Form data for the login modal
     $scope.authErrors = [];
     $scope.user = {};
-    $scope.signup = true;
+    $scope.signup = false;
     $scope.token = '';
     $scope.currentUser = null;
 

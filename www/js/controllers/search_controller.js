@@ -30,7 +30,7 @@ module.exports = function(app) {
     $scope.add = function(contact) {
       $http.post('/api/contacts/add', {userId: $scope.currentUser.id, contactId: contact._id})
         .then(function(res) {
-          console.log(res.data)
+          console.log(res.data);
           // $scope.contacts = res.push();
         }, function(err) {
           console.log(err.data);

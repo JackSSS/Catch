@@ -24,6 +24,13 @@ describe('contacts controller', function() {
       $httpBackend = _$httpBackend_;
       $scope = $rootScope.$new();
       $ControllerContstructor('ContactsController', {$scope: $scope});
+      $httpBackend.when('GET', 'templates/checkin.html').respond(200, 'thanks');
+      $httpBackend.when('GET', 'templates/map.html').respond(200, 'thanks');
+      $httpBackend.when('GET', 'templates/panic.html').respond(200, 'thanks');
+      $httpBackend.when('GET', 'templates/search.html').respond(200, 'thanks');
+      $httpBackend.when('GET', 'templates/home-menu.html').respond(200, 'thanks');
+      $httpBackend.when('GET', 'templates/contacts.html').respond(200, 'thanks');
+      $httpBackend.when('GET', 'templates/auth_form.html').respond(200, 'thanks');
     }));
 
     afterEach(function() {
@@ -36,10 +43,14 @@ describe('contacts controller', function() {
         id: '123'
       };
       $httpBackend.expectGET('http://localhost:3000/api/contacts/' + $scope.currentUser.id)
-        .respond(200, [{_id: 1, username: 'test contact'}]);
+        .respond(200, {
+          contacts: [{_id: 1, username: 'test contact'}],
+          receivedRequests: ['456']
+        });
       $scope.getAll();
       $httpBackend.flush();
-      expect($scope.contacts[0].name).toBe('test contact');
+      expect($scope.contacts[0].username).toBe('test contact');
+      expect($scope.receivedRequests[0]).toBe('456');
     });
   });
 });

@@ -70,11 +70,13 @@ module.exports = function(app) {
           .then(function(res) {
             $cookies.put('token', res.data.token);
             $scope.getUser();
+            $scope.user = {};
             $location.path('/home/panic');
             $ionicLoading.hide();
           }, function(err) {
             $scope.authErrors.push(err.data.msg);
             console.log(err.data);
+            $scope.user = {};
             $ionicLoading.hide();
           });
       } else {
@@ -88,11 +90,13 @@ module.exports = function(app) {
           console.log(res);
           $cookies.put('token', res.data.token);
           $scope.getUser();
+          $scope.user = {};
           $location.path('/home/panic');
           $ionicLoading.hide();
         }, function(err) {
           $scope.authErrors.push(err.data.msg);
           console.log(err.data);
+          $scope.user = {}
           $ionicLoading.hide();
         });
 

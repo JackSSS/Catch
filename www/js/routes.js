@@ -61,7 +61,8 @@ module.exports = function(app) {
         url: '/checkin',
         views: {
           'homeMenuContent': {
-            templateUrl: 'templates/checkin.html'
+            templateUrl: 'templates/checkin.html',
+            controller: 'CheckinCtrl'
           }
         }
       });

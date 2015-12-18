@@ -57,14 +57,14 @@ module.exports = function(app) {
         }
       })
 
-      .state('home.checkin', {
-        url: '/checkin',
-        views: {
-          'homeMenuContent': {
-            templateUrl: 'templates/checkin.html'
-          }
-        }
-      });
+      // .state('home.checkin', {
+      //   url: '/checkin',
+      //   views: {
+      //     'homeMenuContent': {
+      //       templateUrl: 'templates/checkin.html'
+      //     }
+      //   }
+      // });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/auth');
   });

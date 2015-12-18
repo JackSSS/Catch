@@ -96,7 +96,7 @@ module.exports = function(app) {
         }, function(err) {
           $scope.authErrors.push(err.data.msg);
           console.log(err.data);
-          $scope.user = {}
+          $scope.user = {};
           $ionicLoading.hide();
         });
 

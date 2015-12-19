@@ -127,14 +127,14 @@ contactsRouter.post('/contacts/alert', jsonParser, function(req, res) {
       .send({
         tokens: deviceIds,
         notification: {
-          alert: user.username + ' pushed the panic button!'
+          alert: user.username + ' pushed the alert button!'
         }
       })
       .end(function(error, response) {
         if (error) return handleError(error, res);
 
-        console.log(response);
-        res.json(response);
+        console.log(response.body);
+        res.json(response.body);
       });
   });
 });

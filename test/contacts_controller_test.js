@@ -1,10 +1,19 @@
 require(__dirname + '/../www/js/bundle');
 require('angular-mocks');
 
+var templates = ['checkin.html', 'map.html', 'panic.html', 'search.html',
+'home-menu.html', 'contacts.html', 'auth_form.html'];
+
 describe('contacts controller', function() {
   var $httpBackend;
   var $ControllerContstructor;
   var $scope;
+
+  function setupHttp(templates) {
+    templates.forEach(function(template) {
+      $httpBackend.when('GET', 'templates/' + template).respond(200, 'thanks');
+    });
+  }
 
   beforeEach(angular.mock.module('catch'));
 
@@ -24,13 +33,7 @@ describe('contacts controller', function() {
       $httpBackend = _$httpBackend_;
       $scope = $rootScope.$new();
       $ControllerContstructor('ContactsController', {$scope: $scope});
-      $httpBackend.when('GET', 'templates/checkin.html').respond(200, 'thanks');
-      $httpBackend.when('GET', 'templates/map.html').respond(200, 'thanks');
-      $httpBackend.when('GET', 'templates/panic.html').respond(200, 'thanks');
-      $httpBackend.when('GET', 'templates/search.html').respond(200, 'thanks');
-      $httpBackend.when('GET', 'templates/home-menu.html').respond(200, 'thanks');
-      $httpBackend.when('GET', 'templates/contacts.html').respond(200, 'thanks');
-      $httpBackend.when('GET', 'templates/auth_form.html').respond(200, 'thanks');
+      setupHttp(templates);
     }));
 
     afterEach(function() {
@@ -51,6 +54,52 @@ describe('contacts controller', function() {
       $httpBackend.flush();
       expect($scope.contacts[0].username).toBe('test contact');
       expect($scope.receivedRequests[0]).toBe('456');
+    });
+
+    it('should accept a contact request', function() {
+      var requester = {username: 'test requester', _id: '435'};
+      $scope.currentUser = {username: 'test user', id: '123'};
+      $httpBackend.expectPUT('http://localhost:3000/api/contacts/confirm', {
+        userId: $scope.currentUser.id,
+        requesterId: requester._id
+      })
+        .respond(200, {requester: {username: 'test'}});
+      $scope.acceptRequest(requester);
+      $httpBackend.flush();
+    });
+
+    it('should search for contacts', function() {
+      $scope.searchParam = 'test';
+      $httpBackend.expectPOST('http://localhost:3000/api/contacts/search', {
+        search: $scope.searchParam
+      })
+        .respond(200, ['search', 'results']);
+      $scope.search();
+      $httpBackend.flush();
+      expect($scope.searchResults[0]).toBe('search');
+      expect($scope.searchResults[1]).toBe('results');
+    });
+
+    it('should make a contact request', function() {
+      var contact = {username: 'test1', _id: '123'};
+      $scope.currentUser = {username: 'test user', id: '4567'};
+      $scope.currentUser.contacts = [];
+      $httpBackend.expectPUT('http://localhost:3000/api/contacts/add', {
+        userId: $scope.currentUser.id,
+        contactId: contact._id
+      })
+        .respond(200, {contact: {username: 'test1', _id: '123'}});
+      $scope.makeRequest(contact);
+      $httpBackend.flush();
+    });
+
+    it('should clear search', function() {
+      $httpBackend.flush();
+      $scope.searchParam = 'test';
+      $scope.searchResults = ['one', 'two'];
+      $scope.clearSearch();
+      expect($scope.searchParam).toBe('');
+      expect($scope.searchResults.length).toBe(0);
     });
   });
 });

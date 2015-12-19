@@ -108,12 +108,15 @@ contactsRouter.post('/contacts/search', jsonParser, function(req, res) {
 
 contactsRouter.post('/contacts/alert', jsonParser, function(req, res) {
   var user = req.body.user;
-  debugger;
-    User.find({_id: {$in: user.contacts}}), 'deviceId', function(err, results) {
-      if (err) return handleError(err, res);
+  var contactsIds = user.contacts;
 
-      res.json(results);
+  User.find({_id: {$in: contactsIds}}, function(err, contacts) {
+    if (err) return handleError(err, res);
 
+    var deviceIds = contacts.map(function(contact) {
+      return contact.deviceId;
+    });
 
-  };
+    res.json(deviceIds);
+  });
 });

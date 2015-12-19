@@ -80,9 +80,9 @@ authRouter.get('/user', decryptUser, function(req, res) {
 });
 
 authRouter.post('/user', decryptUser, function(req, res) {
-	debugger;
-	User.findOne({'name': req.user.name}, function(err, foundUser) {
-		
+	User.findOne({'_id': req.user._id}, function(err, foundUser) {
+		foundUser.location = req.user.location;
+		foundUser.lastCheckin = req.user.lastCheckin;
 	});
 
 	res.json({

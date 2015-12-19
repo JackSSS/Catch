@@ -3,7 +3,7 @@ module.exports = function(app) {
   function($scope, $http, $ionicLoading, $ionicPopup, $cookies) {
   	var cookieToken = $cookies.get('token');
 
-	 	$scope.lastUpdate;
+	 	$scope.lastUpdate = '';
 
 	 	if(!$scope.lastUpdate) {
 	 		$http({

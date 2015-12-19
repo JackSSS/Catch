@@ -105,3 +105,15 @@ contactsRouter.post('/contacts/search', jsonParser, function(req, res) {
     res.json(results);
   });
 });
+
+contactsRouter.post('/contacts/alert', jsonParser, function(req, res) {
+  var user = req.body.user;
+  debugger;
+    User.find({_id: {$in: user.contacts}}), 'deviceId', function(err, results) {
+      if (err) return handleError(err, res);
+
+      res.json(results);
+
+
+  };
+});

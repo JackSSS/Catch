@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var jsonParser = require('body-parser').json();
 var User = require(__dirname + '/../models/user');
 var handleError = require(__dirname + '/../lib/handle_server_error');
+var request = require('superagent');
+var config = require(__dirname + '/../config');
 
 var contactsRouter = module.exports = exports = express.Router();
 
@@ -117,6 +119,22 @@ contactsRouter.post('/contacts/alert', jsonParser, function(req, res) {
       return contact.deviceId;
     });
 
-    res.json(deviceIds);
+    request
+      .post('https://push.ionic.io/api/v1/push')
+      .set('Content-Type', 'application/json')
+      .set('X-Ionic-Application-Id', config.ionicAppId)
+      .auth(config.ionicApiKey)
+      .send({
+        tokens: deviceIds,
+        notification: {
+          alert: user.username + ' pushed the panic button!'
+        }
+      })
+      .end(function(error, response) {
+        if (error) return handleError(error, res);
+
+        console.log(response);
+        res.json(response);
+      });
   });
 });

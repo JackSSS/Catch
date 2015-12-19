@@ -23,6 +23,15 @@ catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
       StatusBar.styleDefault();
     }
 
+    var push = new Ionic.Push({
+      "debug": true
+    });
+
+    push.register(function(token) {
+      console.log("Device token:",token.token);
+      $rootScope.deviceId = token.token;
+    });
+
     var posOptions = {
       enableHighAccuracy: true,
       timeout: 20000
@@ -35,3 +44,14 @@ catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
     });
   });
 });
+
+// var push = new Ionic.Push({
+//   "debug": true,
+//   "onNotification": function(notification) {
+//     var payload = notification.payload;
+//     console.log(notification, payload);
+//   },
+//   "onRegister": function(data) {
+//     console.log(data.token);
+//   }
+// });

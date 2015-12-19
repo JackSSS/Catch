@@ -27,7 +27,7 @@ authRouter.post('/signup', bodyParser.json(), function(req, res) {
 	});
 });
 
-authRouter.get('/signin', basicHttp, function(req, res) {
+authRouter.post('/signin', basicHttp, bodyParser.json(), function(req, res) {
 	if(!(req.auth.username && req.auth.password)) {
 		console.log('no authentication found on request object');
 		return res.status(401).json({
@@ -35,7 +35,7 @@ authRouter.get('/signin', basicHttp, function(req, res) {
 		});
 	}
 
-	User.findOne({'auth.basic.username': req.auth.username}, function(err, foundUser) {
+	User.findOneAndUpdate({'auth.basic.username': req.auth.username}, {deviceId: req.body.deviceId}, {new: true}, function(err, foundUser) {
 		if(err) {
 			console.log('user lookup error');
 			console.log(err);
@@ -61,6 +61,8 @@ authRouter.get('/signin', basicHttp, function(req, res) {
 		foundUser.genToken(function(err, token) {
 			res.json({token: token});
 		});
+
+
 	});
 });
 

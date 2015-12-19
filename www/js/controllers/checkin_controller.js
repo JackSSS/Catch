@@ -5,24 +5,31 @@ module.exports = function(app) {
 
 	 	$scope.lastUpdate;
 
-	 // 	if(!$scope.lastUpdate) {
-	 // 		$http({
-		//     url: 'api/user', 
-		//     method: "GET",
-		//     headers: {
-		//     	token: cookieToken
-		//     }
-		//  	}).then(function(res) {
-		//  		res.data.lastCheckin = Date.now();
-		//  		console.log(res.data.lastCheckin());
-		//  	}, function(err) {
-		//  		console.log('/api/user error = ' + err);
-		//  	});
-		// }
+	 	if(!$scope.lastUpdate) {
+	 		$http({
+		    url: 'api/user', 
+		    method: "GET",
+		    headers: {
+		    	token: cookieToken
+		    }
+		 	}).then(function(res) {
+		 		res.data.lastCheckin = Date.now();
+		 		console.log(res.data.lastCheckin);
+		 	}, function(err) {
+		 		console.log('/api/user error = ' + err);
+		 	});
+		}
 
 		$scope.showAlert = function() {
 			var dateNow = new Date();
 
+			$http({
+				url: 'api/user',
+				method: 'POST',
+				data: {
+
+				}
+			});
 
 			$ionicPopup.alert({
 				title: 'Check In',

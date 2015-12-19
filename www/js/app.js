@@ -23,14 +23,21 @@ catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
       StatusBar.styleDefault();
     }
 
-    var push = new Ionic.Push({
-      "debug": true
-    });
+    var push;
+    try {
+      push = new Ionic.Push({
+        "debug": true
+      });
+      
+      push.register(function(token) {
+        console.log("Device token:",token.token);
+        $rootScope.deviceId = token.token;
+      });
+    } catch (e) {
+      console.log(e);
+      console.log('You must be on a browser');
+    }
 
-    push.register(function(token) {
-      console.log("Device token:",token.token);
-      $rootScope.deviceId = token.token;
-    });
 
     var posOptions = {
       enableHighAccuracy: true,

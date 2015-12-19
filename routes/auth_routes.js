@@ -74,19 +74,18 @@ authRouter.get('/user', decryptUser, function(req, res) {
 		deviceId: req.user.deviceId,
 		location: req.user.location,
 		contacts: req.user.contacts,
+		lastCheckin: req.user.lastCheckin,
 		id: req.user._id
 	});
 });
 
 authRouter.post('/user', decryptUser, function(req, res) {
-	console.log(req.user.name);
-	req.user.name = 'Chapreese';
-	console.log(req.user.name);
-	User.findOne({'name': 'Chapreese'}, function(err, foundUser) {
-		if(!err) console.log("found a user!");
-		else console.log('error: req.user.name does not refer to DB');
+	debugger;
+	User.findOne({'name': req.user.name}, function(err, foundUser) {
+		
 	});
-	res.json({
 
+	res.json({
+		msg: 'User changed...?'
 	});
 });

@@ -3,9 +3,7 @@ module.exports = function(app) {
   function($scope, $http, $ionicLoading, $ionicPopup, $cookies) {
   	var cookieToken = $cookies.get('token');
 
-	 	$scope.lastUpdate = '';
-
-	 	if(!$scope.lastUpdate) {
+	 	$scope.updateUser = function() {
 	 		$http({
 		    url: 'api/user', 
 		    method: "GET",
@@ -13,25 +11,40 @@ module.exports = function(app) {
 		    	token: cookieToken
 		    }
 		 	}).then(function(res) {
-		 		res.data.lastCheckin = Date.now();
-		 		res.data.lat = $scope.lat;
-		 		res.data.lng = $scope.lng;
+		 		console.log('setting scope.currentUser...');
+		 		$scope.currentUser = res.user;
+		 		$scope.currentUser.lat = $scope.lat;
+		 		$scope.currentUser.lng = $scope.lng;
+		 		$scope.currentUser.lastCheckin = Date.now();
 		 	}, function(err) {
-		 		console.log('/api/user error = ' + err);
+		 		console.log(err);
 		 	});
-		}
-
+	 	}
+	 	
 		$scope.checkIn = function() {
+			$scope.updateUser();
+
+			console.log($scope.currentUser);
+
 			var dateNow = new Date();
 			$scope.lastUpdate = dateNow;
+
 			$http({
 				url: 'api/user',
 				method: 'POST',
-				json: {
+				data: {
+					_id: $scope.currentUser._id,
 					lng: $scope.lng,
 					lat: $scope.lat,
-					lastCheckin: dateNow
+					lastCheckin: dateNow	
+				},
+				headers: {
+					token: cookieToken
 				}
+			}).then(function(res) {
+				console.log('Successfully sent user location data')
+			}, function(err) {
+				console.log('Error sending user location data: ' + err);
 			});
 
 			$ionicPopup.alert({

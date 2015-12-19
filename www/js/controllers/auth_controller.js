@@ -34,13 +34,12 @@ module.exports = function(app) {
     $scope.token = '';
     $scope.currentUser = null;
 
+    // Switch between signup and login
     $scope.toggleSignup = function() {
-
       if ($scope.signup)
         $scope.signup = false;
       else
         $scope.signup = true;
-
       $scope.authErrors = [];
       $scope.user = {};
     };
@@ -57,7 +56,10 @@ module.exports = function(app) {
     };
 
     $scope.authenticate = function(user) {
-      user.deviceId = $rootScope.deviceId;
+      // user.deviceId = $rootScope.deviceId;
+      user.lat = $rootScope.lat;
+      user.lng = $rootScope.lng;
+
       $scope.authErrors = [];
 
       if (!(user.auth.username && user.auth.password))
@@ -86,7 +88,10 @@ module.exports = function(app) {
         $http({
           method: 'POST',
           url: '/api/signin',
-          data: {deviceId: 'user.deviceId'},
+          data: {
+            lat: $rootScope.lat,
+            lng: $rootScope.lng
+          },
           headers: {
             'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)
           }

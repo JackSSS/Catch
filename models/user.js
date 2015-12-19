@@ -5,7 +5,7 @@ var eat = require('eat');
 var userSchema = new mongoose.Schema({
   name    : String,
 	username: String,
-  deviceId: Number,
+  deviceId: String,
   location: Number,
   contacts: Array,
   sentRequests: Array,

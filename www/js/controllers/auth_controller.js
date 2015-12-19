@@ -73,6 +73,7 @@ module.exports = function(app) {
             $cookies.put('token', res.data.token);
             $scope.getUser();
             $scope.user = {};
+            $scope.signup = false;
             $location.path('/home/panic');
             $ionicLoading.hide();
           }, function(err) {
@@ -113,6 +114,7 @@ module.exports = function(app) {
       $scope.currentUser = null;
       $scope.user = {};
       $scope.user.auth = null;
+      $scope.signup = false;
       $location.path('/auth');
       $cookies.remove('token');
     };

@@ -72,7 +72,8 @@ authRouter.get('/user', decryptUser, function(req, res) {
 	res.json({
 		username: req.user.username,
 		deviceId: req.user.deviceId,
-		location: req.user.location,
+		lat: req.user.lat,
+		lng: req.user.lng,
 		contacts: req.user.contacts,
 		lastCheckin: req.user.lastCheckin,
 		id: req.user._id
@@ -80,9 +81,11 @@ authRouter.get('/user', decryptUser, function(req, res) {
 });
 
 authRouter.post('/user', decryptUser, function(req, res) {
-	User.findOne({'_id': req.user._id}, function(err, foundUser) {
-		foundUser.location = req.user.location;
-		foundUser.lastCheckin = req.user.lastCheckin;
+	debugger;	
+	User.findOneAndUpdate({'_id': req.user._id}, {
+		lat: req.data.lat,
+		lng: req.data.lng,
+		lastCheckin: req.data.lastCheckin
 	});
 
 	res.json({

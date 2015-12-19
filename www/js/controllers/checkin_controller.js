@@ -14,20 +14,23 @@ module.exports = function(app) {
 		    }
 		 	}).then(function(res) {
 		 		res.data.lastCheckin = Date.now();
-		 		console.log(res.data.lastCheckin);
+		 		res.data.lat = $scope.lat;
+		 		res.data.lng = $scope.lng;
 		 	}, function(err) {
 		 		console.log('/api/user error = ' + err);
 		 	});
 		}
 
-		$scope.showAlert = function() {
+		$scope.checkIn = function() {
 			var dateNow = new Date();
-
+			$scope.lastUpdate = dateNow;
 			$http({
 				url: 'api/user',
 				method: 'POST',
-				data: {
-
+				json: {
+					lng: $scope.lng,
+					lat: $scope.lat,
+					lastCheckin: dateNow
 				}
 			});
 

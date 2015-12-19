@@ -7,6 +7,7 @@ var userSchema = new mongoose.Schema({
 	username: String,
   deviceId: Number,
   location: Number,
+  lastCheckin: Number,
   contacts: Array,
   sentRequests: Array,
   receivedRequests: Array,

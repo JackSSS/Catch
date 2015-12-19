@@ -87,7 +87,6 @@ module.exports = function(app) {
             'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)
           }
         }).then(function(res) {
-          console.log(res);
           $cookies.put('token', res.data.token);
           $scope.getUser();
           $scope.user = {};

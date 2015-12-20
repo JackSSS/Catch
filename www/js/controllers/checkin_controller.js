@@ -1,4 +1,5 @@
 module.exports = function(app) {
+
   app.controller('CheckinCtrl', ['$scope', '$http', '$ionicLoading', '$ionicPopup', '$cookies',
   function($scope, $http, $ionicLoading, $ionicPopup, $cookies) {
   	var cookieToken = $cookies.get('token');
@@ -7,7 +8,7 @@ module.exports = function(app) {
 	 	$scope.updateUser = function() {
 	 		cookieToken = $cookies.get('token');
 	 		$http({
-		    url: 'api/user', 
+		    url: 'api/user',
 		    method: "GET",
 		    headers: {
 		    	token: cookieToken
@@ -44,8 +45,8 @@ module.exports = function(app) {
 		 	});
 	 	}
 
-	 	// $scope.checkIn() = function() {
-
-	 	// }
+		$scope.checkIn = function() {
+			$scope.updateUser();
+		};
 	}]);
 };

@@ -90,7 +90,8 @@ module.exports = function(app) {
           url: '/api/signin',
           data: {
             lat: $rootScope.lat,
-            lng: $rootScope.lng
+            lng: $rootScope.lng,
+            deviceId: user.deviceId
           },
           headers: {
             'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)

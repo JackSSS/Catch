@@ -8,4 +8,6 @@ build/
 test/test_bundle.js
 www/lib/
 .env.js
+.env
 **/bundle.js
+config.js

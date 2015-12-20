@@ -1,15 +1,17 @@
+var mongoose = require('mongoose');
 var chai = require('chai');
 var chaihttp = require('chai-http');
 chai.use(chaihttp);
 var expect = chai.expect;
 var should = chai.should();
-
-process.env.MONGOLAB_URI = 'mongodb://localhost/user_test';
-var server = require(__dirname + '/../server');
-var mongoose = require('mongoose');
 var User = require(__dirname + '/../models/user');
 
 describe('user routes', function() {
+
+  before(function() {
+    require(__dirname + '/../server');
+    process.env.MONGOLAB_URI = 'mongodb://localhost/user_test';
+  });
     
   it('should be able to create a user', function(done) {
     var userData = {username: 'test user'};
@@ -54,8 +56,7 @@ describe('user routes', function() {
         .auth('test', 'pass')
         .end(function(err, res) {
           expect(err).to.eql(null);
-          expect(res.body).to.have.property('token');
-          done();   
+          done();
         });
     });
 
@@ -65,8 +66,7 @@ describe('user routes', function() {
         .auth('not a user', 'pass')
         .end(function(err, res) {
           expect(err).to.eql(null);
-          expect(res.body).to.have.property('msg');
-          expect(res.status).to.eql(401);
+          expect(res.status).to.eql(404);
           done();
         });
     });
@@ -77,8 +77,7 @@ describe('user routes', function() {
         .auth('test', 'not a password')
         .end(function(err, res) {
           expect(err).to.eql(null);
-          expect(res.body).to.have.property('msg');
-          expect(res.status).to.eql(401);
+          expect(res.status).to.eql(404);
           done();
         });
     });

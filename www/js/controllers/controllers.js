@@ -3,4 +3,5 @@ module.exports = function(app) {
   require('./panic_controller')(app);
   require('./contacts_controller')(app);
   require('./search_controller')(app);
+  require('./checkin_controller')(app);
 };

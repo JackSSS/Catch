@@ -61,8 +61,6 @@ authRouter.post('/signin', basicHttp, bodyParser.json(), function(req, res) {
 		foundUser.genToken(function(err, token) {
 			res.json({token: token});
 		});
-
-
 	});
 });
 

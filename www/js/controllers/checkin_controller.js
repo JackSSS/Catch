@@ -17,8 +17,6 @@ module.exports = function(app) {
 		 		$scope.currentUser.lat = $scope.lat;
 		 		$scope.currentUser.lng = $scope.lng;
 		 		$scope.currentUser.lastCheckin = Date.now();
-				var dateNow = new Date();
-				$scope.lastUpdate = dateNow;
 
 				$http({
 					url: 'api/user',
@@ -28,10 +26,9 @@ module.exports = function(app) {
 						token: cookieToken
 					}
 				}).then(function(res) {
-					console.log('Successfully sent user location data')
 					$ionicPopup.alert({
 						title: 'Check In',
-						template: 'Checked in at ' + dateNow.toLocaleTimeString(),
+						template: 'Checked in at ' + new Date().toLocaleTimeString(),
 						okType: 'button-dark'
 					});
 				}, function(err) {
@@ -46,9 +43,9 @@ module.exports = function(app) {
 		 		console.log(err);
 		 	});
 	 	}
-	 	
-		$scope.checkIn = function() {
-			$scope.updateUser();
-		};
+
+	 	// $scope.checkIn() = function() {
+
+	 	// }
 	}]);
 };

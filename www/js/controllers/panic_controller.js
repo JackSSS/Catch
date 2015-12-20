@@ -13,11 +13,6 @@ module.exports = function(app) {
       $scope.displayAndWatch = function(position) {
         setCurrentPosition(position);
         watchCurrentPosition();
-        $ionicPopup.alert({
-          title: 'C A T C H',
-          template: 'Location watch has been enabled!',
-          okType: 'button-dark'
-        });
       }
 
       $scope.setCurrentPosition = function(pos) {

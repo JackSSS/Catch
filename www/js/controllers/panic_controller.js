@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-  app.controller('PanicCtrl', ['$scope', '$rootscope' '$ionicPopup',
+  app.controller('PanicCtrl', ['$scope', '$rootscope', '$ionicPopup',
     function($scope, $rootscope, $ionicPopup) {
 
     var lat = $rootScope.lat;

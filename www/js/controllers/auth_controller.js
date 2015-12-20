@@ -48,7 +48,7 @@ module.exports = function(app) {
     $scope.getUser = function() {
       $scope.token = $cookies.get('token');
       $http.defaults.headers.common.token = $scope.token;
-      $http.get('/api/user')
+      $http.get(SERVER_ADDRESS + '/api/user')
         .then(function(res) {
           $scope.currentUser = res.data;
         }, function(err) {
@@ -68,7 +68,7 @@ module.exports = function(app) {
       });
 
       if($scope.signup) {
-        $http.post('/api/signup', user)
+        $http.post(SERVER_ADDRESS + '/api/signup', user)
           .then(function(res) {
             $cookies.put('token', res.data.token);
             $scope.getUser();
@@ -82,7 +82,7 @@ module.exports = function(app) {
       } else {
         $http({
           method: 'POST',
-          url: '/api/signin',
+          url: SERVER_ADDRESS + '/api/signin',
           data: {deviceId: user.deviceId},
           headers: {
             'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)

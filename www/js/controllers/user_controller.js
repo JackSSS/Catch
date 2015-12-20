@@ -5,7 +5,7 @@ module.exports = function(app) {
     $scope.newUser = null;
 
     $scope.getAll = function() {
-      $http.get('/api/user')
+      $http.get(SERVER_ADDRESS + '/api/user')
         .then(function(res) {
           $scope.users = res.data;
         }, function(err) {
@@ -14,7 +14,7 @@ module.exports = function(app) {
     };
 
     $scope.create = function(user) {
-      $http.post('/api/user', user)
+      $http.post(SERVER_ADDRESS + '/api/user', user)
         .then(function(res) {
           $scope.users.push(res.data);
           $scope.newUser = null;
@@ -25,7 +25,7 @@ module.exports = function(app) {
 
     $scope.update = function(user) {
       user.editing = false;
-      $http.put('/api/user/' + user._id, user)
+      $http.put(SERVER_ADDRESS + '/api/user/' + user._id, user)
         .then(function(res) {
           console.log('this user has a been modified');
         }, function(err) {
@@ -36,7 +36,7 @@ module.exports = function(app) {
 
     $scope.remove = function(user) {
       $scope.users.splice($scope.users.indexOf(user), 1);
-      $http.delete('/api/user/' + user._id)
+      $http.delete(SERVER_ADDRESS + '/api/user/' + user._id)
         .then(function(res) {
           console.log('user deleted');
         }, function(err) {

@@ -125,8 +125,5 @@ module.exports = function(app) {
       $cookies.remove('token');
     };
 
-    if(!$cookies.get('token')) {
-      $location.path('/auth');
-    }
   });
 };

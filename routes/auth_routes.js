@@ -80,20 +80,11 @@ authRouter.get('/user', decryptUser, function(req, res) {
 	});
 });
 
-authRouter.post('/user', basicHttp, bodyParser.json(), function(req, res) {
-	debugger;
-	User.findOneAndUpdate({'_id': req.body._id}, {
-		lat: req.body.lat,
-		lng: req.body.lng,
-		lastCheckin: req.body.lastCheckin
-	}, {}, function(err, foundUser) {
-		if(err) {
-			console.log(err);
-		} else {
-			res.json({
-				msg: 'User ' + foundUser.username + ' successfully updated'
-			});
-		}
+authRouter.post('/user', bodyParser.json(), function(req, res) {
+	User.findOneAndUpdate({'_id': req.body.id}, req.body, {}, function(err, foundUser) {
+		if(err) console.log(err);
+		else 
+			console.log(foundUser.username + ' was successfully updated!');
 	});
 
 });

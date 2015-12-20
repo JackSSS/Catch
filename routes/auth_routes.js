@@ -83,8 +83,6 @@ authRouter.get('/user', decryptUser, function(req, res) {
 authRouter.post('/user', bodyParser.json(), function(req, res) {
 	User.findOneAndUpdate({'_id': req.body.id}, req.body, {}, function(err, foundUser) {
 		if(err) console.log(err);
-		else 
-			console.log(foundUser.username + ' was successfully updated!');
+		res.json(foundUser);
 	});
-
 });

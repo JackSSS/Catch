@@ -82,7 +82,7 @@ authRouter.get('/user', decryptUser, function(req, res) {
 
 authRouter.post('/user', bodyParser.json(), function(req, res) {
 	User.findOneAndUpdate({'_id': req.body.id}, req.body, {}, function(err, foundUser) {
-		if(err) console.log(err);
-		res.json(foundUser);
+		if(err) res.status(401).json({msg: 'Query unsuccessful!\n' + err})
+		res.json({msg: 'Query successful for ' + foundUser.username});
 	});
 });

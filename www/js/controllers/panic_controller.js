@@ -1,10 +1,6 @@
 module.exports = function(app) {
 
-  app.controller('PanicCtrl', ['$scope', '$rootscope', '$ionicPopup',
-    function($scope, $rootscope, $ionicPopup) {
-
-    var lat = $rootScope.lat;
-    var lng = $rootScope.lng;
+  app.controller('PanicCtrl', ['$scope', '$ionicPopup', function($scope, $ionicPopup) {
 
       $scope.showAlert = function() {
         $ionicPopup.alert({
@@ -22,10 +18,16 @@ module.exports = function(app) {
       $scope.setCurrentPosition = function(pos) {
         currentPositionMarker = new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng(lat, lng),
+            position: new google.maps.LatLng(
+              pos.coords.latitude,
+              pos.coords.longitude
+            ),
             title: "Current Position"
         });
-        map.panTo(new google.maps.LatLng(lat, lng));
+        map.panTo(new google.maps.LatLng(
+              pos.coords.latitude,
+              pos.coords.longitude
+            ));
       }
 
       $scope.watchCurrentPosition = function() {
@@ -40,7 +42,9 @@ module.exports = function(app) {
 
       $scope.setMarkerPosition = function(marker, position) {
         marker.setPosition(
-          new google.maps.LatLng(lat, lng)
+          new google.maps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude)
         );
       }
   }]);

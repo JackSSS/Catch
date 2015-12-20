@@ -2,7 +2,7 @@
   <ion-content>
     <ion-list ng-if="searchResults.length <= 0">
       <div class="item" ng-repeat="contact in contacts">
-        {{contact.username}}
+        {{contact.name}}
       </div>
 
       <div class="item item-divider">
@@ -10,19 +10,20 @@
       </div>
 
       <div class="item item-icon-right" ng-repeat="request in receivedRequests">
-        {{request.username}}
+        {{request.name}}
         <i class="icon ion-android-person-add" ng-click="acceptRequest(request)"></i>
       </div>
-
     </ion-list>
 
+    <section id="addContact">      
+    </section>
+    
     <ion-list ng-if="searchResults.length > 0">
       <div class="item item-icon-right" ng-repeat="result in searchResults">
         {{result.username}}
         <i class="icon ion-android-person-add" ng-click="makeRequest(result)"></i>
       </div>
     </ion-list>
-
   </ion-content>
   <form class="bar bar-footer item-input-inset" ng-submit="search()">
     <label class="item-input-wrapper">

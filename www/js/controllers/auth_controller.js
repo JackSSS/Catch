@@ -30,17 +30,16 @@ module.exports = function(app) {
     // Form data for the login modal
     $scope.authErrors = [];
     $scope.user = {};
-    $scope.signup = true;
+    $scope.signup = false;
     $scope.token = '';
     $scope.currentUser = null;
 
+    // Switch between signup and login
     $scope.toggleSignup = function() {
-
       if ($scope.signup)
         $scope.signup = false;
       else
         $scope.signup = true;
-
       $scope.authErrors = [];
       $scope.user = {};
     };
@@ -57,7 +56,10 @@ module.exports = function(app) {
     };
 
     $scope.authenticate = function(user) {
-      user.deviceId = $rootScope.deviceId;
+      // user.deviceId = $rootScope.deviceId;
+      user.lat = $rootScope.lat;
+      user.lng = $rootScope.lng;
+
       $scope.authErrors = [];
 
       if (!(user.auth.username && user.auth.password))
@@ -72,30 +74,38 @@ module.exports = function(app) {
           .then(function(res) {
             $cookies.put('token', res.data.token);
             $scope.getUser();
+            $scope.user = {};
+            $scope.signup = false;
             $location.path('/home/panic');
             $ionicLoading.hide();
           }, function(err) {
             $scope.authErrors.push(err.data.msg);
             console.log(err.data);
+            $scope.user = {};
             $ionicLoading.hide();
           });
       } else {
         $http({
           method: 'POST',
           url: '/api/signin',
-          data: {deviceId: user.deviceId},
+          data: {
+            lat: $rootScope.lat,
+            lng: $rootScope.lng,
+            deviceId: user.deviceId
+          },
           headers: {
             'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)
           }
         }).then(function(res) {
-          console.log(res);
           $cookies.put('token', res.data.token);
           $scope.getUser();
+          $scope.user = {};
           $location.path('/home/panic');
           $ionicLoading.hide();
         }, function(err) {
           $scope.authErrors.push(err.data.msg);
           console.log(err.data);
+          $scope.user = {};
           $ionicLoading.hide();
         });
 
@@ -110,8 +120,10 @@ module.exports = function(app) {
       $scope.currentUser = null;
       $scope.user = {};
       $scope.user.auth = null;
-      $cookies.remove('token');
+      $scope.signup = false;
       $location.path('/auth');
+      $cookies.remove('token');
     };
+
   });
 };

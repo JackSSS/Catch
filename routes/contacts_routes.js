@@ -5,11 +5,11 @@ var User = require(__dirname + '/../models/user');
 var handleError = require(__dirname + '/../lib/handle_server_error');
 var request = require('superagent');
 var config = require(__dirname + '/../config');
+var decryptUser = require(__dirname + '/../lib/decrypt_user');
 
 var contactsRouter = module.exports = exports = express.Router();
 
-contactsRouter.get('/contacts/:id', function(req, res) {
-
+contactsRouter.get('/contacts/:id', decryptUser, function(req, res) {
   var userId = req.params.id;
 
   function getContacts(user) {
@@ -36,7 +36,7 @@ contactsRouter.get('/contacts/:id', function(req, res) {
   });
 });
 
-contactsRouter.put('/contacts/add', jsonParser, function(req, res) {
+contactsRouter.put('/contacts/add', decryptUser, jsonParser, function(req, res) {
   var userId = req.body.userId;
   var contactId = req.body.contactId;
 
@@ -48,7 +48,7 @@ contactsRouter.put('/contacts/add', jsonParser, function(req, res) {
         cb(contact);
     });
   }
-  
+
   function updateUser(contact) {
     User.findOneAndUpdate({_id: userId}, {$push: {sentRequests: contactId}},
       function(err, user) {
@@ -62,7 +62,7 @@ contactsRouter.put('/contacts/add', jsonParser, function(req, res) {
   updateContact(updateUser);
 });
 
-contactsRouter.put('/contacts/confirm', jsonParser, function(req, res) {
+contactsRouter.put('/contacts/confirm', decryptUser, jsonParser, function(req, res) {
   var userId = req.body.userId;
   var requesterId = req.body.requesterId;
 
@@ -91,7 +91,7 @@ contactsRouter.put('/contacts/confirm', jsonParser, function(req, res) {
   updateRequester(updateUser);
 });
 
-contactsRouter.post('/contacts/search', jsonParser, function(req, res) {
+contactsRouter.post('/contacts/search', decryptUser, jsonParser, function(req, res) {
 
   if (!req.body.search)
     return res.status(411).json({msg: 'no search criteria entered'});
@@ -105,7 +105,7 @@ contactsRouter.post('/contacts/search', jsonParser, function(req, res) {
   });
 });
 
-contactsRouter.post('/contacts/alert', jsonParser, function(req, res) {
+contactsRouter.post('/contacts/alert', decryptUser, jsonParser, function(req, res) {
   var user = req.body.user;
   var contactsIds = user.contacts;
 

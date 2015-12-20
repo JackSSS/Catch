@@ -11,3 +11,4 @@ www/lib/
 .env
 **/bundle.js
 config.js
+db

@@ -66,13 +66,23 @@ authRouter.post('/signin', basicHttp, bodyParser.json(), function(req, res) {
 	});
 });
 
-// Requests to /user should contain a token in either the headers or body - otherwise this will reject with a 401
+// Requests to /user should contain a token in either the headers or body - 
+// otherwise this will reject with a 401
 authRouter.get('/user', decryptUser, function(req, res) {
 	res.json({
 		username: req.user.username,
 		deviceId: req.user.deviceId,
-		location: req.user.location,
+		lat: req.user.lat,
+		lng: req.user.lng,
 		contacts: req.user.contacts,
+		lastCheckin: req.user.lastCheckin,
 		id: req.user._id
+	});
+});
+
+authRouter.post('/user', bodyParser.json(), function(req, res) {
+	User.findOneAndUpdate({'_id': req.body.id}, req.body, {}, function(err, foundUser) {
+		if(err) res.status(401).json({msg: 'Query unsuccessful!\n' + err})
+		res.json({msg: 'Query successful for ' + foundUser.username});
 	});
 });

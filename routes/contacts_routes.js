@@ -17,7 +17,6 @@ contactsRouter.get('/contacts/:id', function(req, res) {
 
     User.find({_id: {$in: contactsIds}}, function(err, contacts) {
       if (err) return handleError(err, res);
-
       getReceivedRequests(user, contacts);
     });
   }
@@ -27,14 +26,12 @@ contactsRouter.get('/contacts/:id', function(req, res) {
 
     User.find({_id: {$in: requestsId}}, function(err, receivedRequests) {
       if (err) return handleError(err, res);
-
       res.json({contacts: contacts, receivedRequests: receivedRequests});
     });
   }
 
   User.findOne({_id: userId}, function(err, user) {
     if (err) return handleError(err, res);
-
     getContacts(user);
   });
 });
@@ -51,7 +48,7 @@ contactsRouter.put('/contacts/add', jsonParser, function(req, res) {
         cb(contact);
     });
   }
-
+  
   function updateUser(contact) {
     User.findOneAndUpdate({_id: userId}, {$push: {sentRequests: contactId}},
       function(err, user) {

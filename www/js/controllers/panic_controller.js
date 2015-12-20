@@ -4,7 +4,7 @@ module.exports = function(app) {
 
       $scope.showAlert = function() {
         $ionicPopup.alert({
-          title: 'Catch',
+          title: 'C A T C H',
           template: 'The panic button has been pushed!',
           okType: 'button-dark'
         });
@@ -13,6 +13,11 @@ module.exports = function(app) {
       $scope.displayAndWatch = function(position) {
         setCurrentPosition(position);
         watchCurrentPosition();
+        $ionicPopup.alert({
+          title: 'C A T C H',
+          template: 'Location watch has been enabled!',
+          okType: 'button-dark'
+        });
       }
 
       $scope.setCurrentPosition = function(pos) {

@@ -83,7 +83,7 @@ module.exports = function(app) {
         $http({
           method: 'POST',
           url: '/api/signin',
-          data: {deviceId: 'user.deviceId'},
+          data: {deviceId: user.deviceId},
           headers: {
             'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)
           }

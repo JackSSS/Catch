@@ -12,7 +12,8 @@
     "body-parser": "^1.14.1",
     "eat": "^0.1.1",
     "express": "^4.13.3",
-    "mongoose": "^4.3.1"
+    "mongoose": "^4.3.1",
+    "superagent": "^1.6.1"
   },
   "devDependencies": {
     "angular-base64": "^2.0.5",

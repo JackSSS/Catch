@@ -10,3 +10,5 @@ www/js/bundle.js
 test/test_bundle.js
 www/lib/
 .env.js
+.env
+config.js

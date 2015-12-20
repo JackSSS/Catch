@@ -1,6 +1,6 @@
 {
   "name": "catch",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "catch: An Ionic project",
   "main": "server.js",
   "scripts": {

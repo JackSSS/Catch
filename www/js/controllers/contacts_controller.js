@@ -31,7 +31,7 @@ module.exports = function(app) {
         if (err) return err;
 
         var alert = $ionicPopup.alert({
-          title: 'Catch',
+          title: 'C A T C H',
           template: 'You are now connected with ' + data.requester.username,
           okType: 'button-dark'
         });
@@ -59,14 +59,14 @@ module.exports = function(app) {
     $scope.makeRequest = function(contact) {
       if (contact._id === $scope.currentUser.id)
         return $ionicPopup.alert({
-          title: 'Catch',
+          title: 'C A T C H',
           template: 'Sorry! You can\'t connect with yourself.',
           okType: 'button-dark'
         });
 
       if ($scope.currentUser.contacts.indexOf(contact._id) !== -1)
         return $ionicPopup.alert({
-          title: 'Catch',
+          title: 'C A T C H',
           template: 'You are already connected with ' + contact.username,
           okType: 'button-dark'
         });
@@ -75,7 +75,7 @@ module.exports = function(app) {
         if (err) return err;
 
         var alert = $ionicPopup.alert({
-          title: 'Catch',
+          title: 'C A T C H',
           template: 'Contact request sent to ' + data.contact.username,
           okType: 'button-dark'
         });

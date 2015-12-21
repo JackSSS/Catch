@@ -6,9 +6,9 @@ var handleError = require(__dirname + '/../lib/handle_server_error');
 var request = require('superagent');
 var config = require(__dirname + '/../config');
 
-var contactsRouter = module.exports = exports = express.Router();
+var alertRouter = module.exports = exports = express.Router();
 
-contactsRouter.post(SERVER_ADDRESS + '/api/contacts/alert', jsonParser, function(req, res) {
+alertRouter.post(SERVER_ADDRESS + '/api/alerts/alert', jsonParser, function(req, res) {
   var user = req.body.user;
   var contactsIds = user.contacts;
 

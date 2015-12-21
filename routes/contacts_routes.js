@@ -108,6 +108,7 @@ contactsRouter.post('/contacts/alert', jsonParser, function(req, res) {
   var user = req.body.user;
   var contactsIds = user.contacts;
 
+  debugger;
   User.find({_id: {$in: contactsIds}}, function(err, contacts) {
     if (err) return handleError(err, res);
 

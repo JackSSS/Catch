@@ -91,7 +91,7 @@ module.exports = function(app) {
           data: {
             lat: $rootScope.lat,
             lng: $rootScope.lng,
-            deviceId: user.deviceId
+            deviceId: $rootScope.deviceId
           },
           headers: {
             'Authorization': 'Basic ' + $base64.encode(user.auth.username + ':' + user.auth.password)

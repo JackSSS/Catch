@@ -1,51 +1,25 @@
 module.exports = function(app) {
 
-  app.controller('PanicCtrl', ['$scope', '$ionicPopup', function($scope, $ionicPopup) {
+  app.controller('PanicCtrl', ['$scope', '$http', '$ionicPopup', function($scope, $http, $ionicPopup) {
+    var server = SERVER_ADDRESS + '/api/contacts/alert';
+    $scope.alert = {};
+    $scope.contactId = '';
 
       $scope.showAlert = function() {
-        $ionicPopup.alert({
+        var alert = $ionicPopup.alert({
           title: 'C A T C H',
           template: 'The panic button has been pushed!',
           okType: 'button-dark'
-        });
-      };
+        }).then(function(contact) {
 
-      $scope.displayAndWatch = function(position) {
-        setCurrentPosition(position);
-        watchCurrentPosition();
-      }
 
-      $scope.setCurrentPosition = function(pos) {
-        currentPositionMarker = new google.maps.Marker({
-            map: map,
-            position: new google.maps.LatLng(
-              pos.coords.latitude,
-              pos.coords.longitude
-            ),
-            title: "Current Position"
-        });
-        map.panTo(new google.maps.LatLng(
-              pos.coords.latitude,
-              pos.coords.longitude
-            ));
-      }
+        $http.post(server, {userId: $scope.currentUser.id, contactId: contact._id})
+        }).then(function(err, res) {
 
-      $scope.watchCurrentPosition = function() {
-        var positionTimer = navigator.geolocation.watchPosition(
-          function (position) {
-            setMarkerPosition(
-              currentPositionMarker,
-              position
-            );
-          });
-      }
+          if (err) return err;
 
-      $scope.setMarkerPosition = function(marker, position) {
-        marker.setPosition(
-          new google.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude)
-        );
-      }
+        $scope.alert.push(res.body);
+      });
+     };
   }]);
 };

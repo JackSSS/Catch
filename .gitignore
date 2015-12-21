@@ -10,7 +10,7 @@ www/lib/
 .env.js
 .env
 **/bundle.js
-config.js
+**/config.js
 db
 .io-config.json
 .api_key.*

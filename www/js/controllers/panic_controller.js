@@ -1,7 +1,6 @@
 module.exports = function(app) {
 
   app.controller('PanicCtrl', ['$scope', '$http', '$ionicPopup', function($scope, $http, $ionicPopup) {
-    var server = SERVER_ADDRESS + '/api/contacts/alert';
     $scope.alert = {};
     $scope.contactId = '';
 
@@ -13,7 +12,7 @@ module.exports = function(app) {
         }).then(function(contact) {
 
 
-        $http.post(server, {userId: $scope.currentUser.id, contactId: contact._id})
+        $http.post('/api/contacts/alert', {userId: $scope.currentUser.id, contactId: contact._id})
         }).then(function(err, res) {
 
           if (err) return err;

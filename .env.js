@@ -1,1 +1,5 @@
-module.exports = {SERVER_ADDRESS: 'http://localhost:3000'};
+module.exports = {
+SERVER_ADDRESS: 'http://localhost:3000',
+IONIC_APP_ID: 'fae31fd1',
+IONIC_PRIVATE_API_KEY: '9ee6e06ae1a81f023440ef383037953d5cf7d7b323323440'
+};

@@ -23,8 +23,8 @@ module.exports = function(app) {
       link: function(scope, element, attrs) {
 
         var zoom = 16;
-        var lat = $rootScope.lat;
-        var lng = $rootScope.lng;
+        var lat = scope.lat;
+        var lng = scope.lng;
 
         GoogleMapsLoader.load(function(google) {
           createMap(google, lat, lng, zoom, element);

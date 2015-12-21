@@ -57,6 +57,19 @@ module.exports = function(app) {
         }
       })
 
+      .state('home.map-alert', {
+        url: '/map/:lat/:lng',
+        views: {
+          'homeMenuContent': {
+            templateUrl: 'templates/map.html',
+            controller: function($stateParams, $scope) {
+              $scope.lat = $stateParams.lat;
+              $scope.lng = $stateParams.lng;
+            }
+          }
+        }
+      })
+
       .state('home.checkin', {
         url: '/checkin',
         views: {

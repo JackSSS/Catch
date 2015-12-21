@@ -1,6 +1,7 @@
 module.exports = function(app) {
-  app.controller('ContactsController', ['$scope', '$http', 'Contacts', '$ionicPopup',
-    function($scope, $http, Contacts, $ionicPopup) {
+  app.controller('ContactsController', [
+    '$scope', '$http', 'Contacts', '$ionicPopup', '$location',
+    function($scope, $http, Contacts, $ionicPopup, $location) {
 
     $scope.$on('$ionicView.enter', function(e) {
       $scope.contacts = [];
@@ -14,6 +15,7 @@ module.exports = function(app) {
 
     $scope.showMap = function(contact) {
       console.log(contact);
+      $location.path('/home/map/' + contact.alert.lat + '/' + contact.alert.lng);
     };
 
     $scope.clearSearch = function() {

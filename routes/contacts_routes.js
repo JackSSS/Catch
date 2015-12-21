@@ -105,10 +105,20 @@ contactsRouter.post('/contacts/search', decryptUser, jsonParser, function(req, r
 });
 
 contactsRouter.post('/contacts/alert', jsonParser, function(req, res) {
-  var user = req.body.user;
+  var user = req.body;
   var contactsIds = user.contacts;
 
-  debugger;
+  function updateUser() {
+    User.findOneAndUpdate({_id: user.id}, {
+      'alert.lat': user.coords.lat,
+      'alert.lng': user.coords.lng
+    }, function(err, user) {
+      if (err) console.log(err);
+      debugger;
+      console.log(user);
+    });
+  }
+
   User.find({_id: {$in: contactsIds}}, function(err, contacts) {
     if (err) return handleError(err, res);
 
@@ -123,6 +133,7 @@ contactsRouter.post('/contacts/alert', jsonParser, function(req, res) {
       if (error) return handleError(error, res);
 
       res.json(response);
+      updateUser();
     });
   });
 });

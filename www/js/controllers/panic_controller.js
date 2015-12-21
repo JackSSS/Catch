@@ -1,9 +1,16 @@
 module.exports = function(app) {
 
-  app.controller('PanicCtrl', ['$scope', '$ionicPopup', '$http', function($scope, $ionicPopup, $http) {
+  app.controller('PanicCtrl', ['$scope', '$ionicPopup', '$http', '$rootScope',
+    function($scope, $ionicPopup, $http, $rootScope) {
 
       $scope.alert = function() {
-        $http.post(SERVER_ADDRESS + '/api/contacts/alert', {user: $scope.currentUser})
+        var user = $scope.currentUser;
+        user.coords = {
+          lat: $rootScope.lat,
+          lng: $rootScope.lng
+        };
+
+        $http.post(SERVER_ADDRESS + '/api/contacts/alert', user)
           .then(function(res) {
             $ionicPopup.alert({
               title: 'C A T C H',

@@ -24,6 +24,10 @@ var userSchema = new mongoose.Schema({
   		username: String,
   		password: String
   	}
+  },
+  alert: {
+    lat: String,
+    lng: String
   }
 });
 

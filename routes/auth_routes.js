@@ -31,7 +31,7 @@ authRouter.post('/signin', basicHttp, bodyParser.json(), function(req, res) {
 	if(!(req.auth.username && req.auth.password)) {
 		console.log('no authentication found on request object');
 		return res.status(401).json({
-			msg: 'Authentication failed, you dirty old bastard'
+			msg: 'Authentication failed'
 		});
 	}
 

@@ -8,7 +8,7 @@ module.exports = function(app) {
 	 	$scope.updateUser = function() {
 	 		cookieToken = $cookies.get('token');
 	 		$http({
-		    url: 'api/user',
+		    url: SERVER_ADDRESS + '/api/user',
 		    method: "GET",
 		    headers: {
 		    	token: cookieToken
@@ -20,7 +20,7 @@ module.exports = function(app) {
 		 		$scope.currentUser.lastCheckin = Date.now();
 
 				$http({
-					url: 'api/user',
+					url: SERVER_ADDRESS + '/api/user',
 					method: 'POST',
 					data: $scope.currentUser,
 					headers: {

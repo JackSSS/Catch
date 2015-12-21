@@ -6,7 +6,6 @@ mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/catch_dev");
 var catchRouter = require(__dirname + '/routes/catch_routes');
 var contactsRouter = require(__dirname + '/routes/contacts_routes');
 var authRouter = require(__dirname + '/routes/auth_routes');
-var alertRouter = require(__dirname + '/routes/alert_routes');
 
 process.env.APP_SECRET = process.env.APP_SECRET || 'suchmysterynoonewilleverknow';
 
@@ -23,7 +22,6 @@ app.use(express.static(__dirname + '/www'));
 app.use('/api', catchRouter);
 app.use('/api', contactsRouter);
 app.use('/api', authRouter);
-app.use('/api', alertRouter);
 
 var port = process.env.PORT || 3000;
 

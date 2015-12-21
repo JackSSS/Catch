@@ -12,6 +12,10 @@ module.exports = function(app) {
       $scope.getAll();
     });
 
+    $scope.showMap = function(contact) {
+      console.log(contact);
+    };
+
     $scope.clearSearch = function() {
       $scope.searchParam = '';
       $scope.searchResults = [];

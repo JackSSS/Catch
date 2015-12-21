@@ -1,8 +1,9 @@
 <ion-view view-title="C O N T A C T S">
   <ion-content>
     <ion-list ng-if="searchResults.length <= 0">
-      <div class="item" ng-repeat="contact in contacts">
+      <div  class="item item-icon-right" ng-repeat="contact in contacts" ng-click="showMap(contact)">
         {{contact.username}}
+        <i ng-if="contact.alert" class="icon ion-alert"></i>
       </div>
 
       <div class="item item-divider">

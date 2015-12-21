@@ -3,8 +3,8 @@ var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 var expect = chai.expect;
 
-require(__dirname + '/../server');
 process.env.MONGOLAB_URI = 'mongodb://localhost/contacts_test';
+require(__dirname + '/../server');
 
 var mongoose = require('mongoose');
 var User = require(__dirname + '/../models/user');

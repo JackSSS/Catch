@@ -48,7 +48,7 @@ contactsRouter.put('/contacts/add', jsonParser, function(req, res) {
         cb(contact);
     });
   }
-  
+
   function updateUser(contact) {
     User.findOneAndUpdate({_id: userId}, {$push: {sentRequests: contactId}},
       function(err, user) {

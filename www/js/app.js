@@ -27,7 +27,7 @@ catchApp.run(function($ionicPlatform, $cordovaGeolocation, $rootScope) {
       push = new Ionic.Push({
         "debug": true
       });
-      
+
       push.register(function(token) {
         console.log("Device token:",token.token);
         $rootScope.deviceId = token.token;

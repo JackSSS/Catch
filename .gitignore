@@ -12,3 +12,5 @@ www/lib/
 **/bundle.js
 config.js
 db
+.api_key.*
+*.io-config.json

@@ -9,8 +9,8 @@ var User = require(__dirname + '/../models/user');
 describe('user routes', function() {
 
   before(function() {
-    process.env.MONGOLAB_URI = 'mongodb://localhost/user_test';
     require(__dirname + '/../server');
+    process.env.MONGOLAB_URI = 'mongodb://localhost/user_test';
   });
     
   it('should be able to create a user', function(done) {

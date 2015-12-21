@@ -1,6 +1,20 @@
 module.exports = function(app) {
 
-  app.controller('PanicCtrl', ['$scope', '$ionicPopup', function($scope, $ionicPopup) {
+  app.controller('PanicCtrl', ['$scope', '$ionicPopup', '$http', function($scope, $ionicPopup, $http) {
+
+      $scope.alert = function() {
+        $http.post(SERVER_ADDRESS + '/api/contacts/alert', {user: $scope.currentUser})
+          .then(function(res) {
+            $ionicPopup.alert({
+              title: 'C A T C H',
+              template: 'The alert button has been pushed!',
+              okType: 'button-dark'
+            });
+            console.log(res);
+          }, function(err) {
+            console.log(err);
+          });
+      };
 
       $scope.showAlert = function() {
         $ionicPopup.alert({

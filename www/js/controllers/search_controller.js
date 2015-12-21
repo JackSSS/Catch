@@ -35,7 +35,7 @@ module.exports = function(app) {
         if (err) return err;
 
         $ionicPopup.alert({
-          title: 'Catch',
+          title: 'C A T C H',
           template: 'Contact request sent to ' + data.contact.username,
           okType: 'button-dark'
         });

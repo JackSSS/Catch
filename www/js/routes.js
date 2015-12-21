@@ -27,17 +27,6 @@ module.exports = function(app) {
         }
       })
 
-      .state('home.search', {
-        url: '/search',
-        views: {
-          'homeMenuContent': {
-            templateUrl: 'templates/search.html',
-            controller: 'SearchController',
-            controllerAs: 'search'
-          }
-        }
-      })
-
       .state('home.panic', {
         url: '/panic',
         views: {

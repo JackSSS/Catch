@@ -13,10 +13,7 @@ var userSchema = new mongoose.Schema({
     default: Date.now()
   },
   contacts: Array,
-  requestsForCheckin: {
-      parent: String,
-      timeToCheck: Date
-    },
+  checkInRequested: Boolean,
   sentRequests: Array,
   receivedRequests: Array,
   auth: {

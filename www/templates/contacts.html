@@ -3,6 +3,7 @@
     <ion-list ng-if="searchResults.length <= 0">
       <div  class="item item-icon-right" ng-repeat="contact in contacts" >
         {{contact.username}}
+        <i ng-if="!contact.checkInRequested" class="icon ion-ios-world-outline" ng-click=""></i>
         <i ng-if="contact.alert" class="icon ion-alert" ng-click="showMap(contact)"></i>
       </div>
 

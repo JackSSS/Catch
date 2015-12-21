@@ -8,7 +8,7 @@ var config = require(__dirname + '/../config');
 
 var alertRouter = module.exports = exports = express.Router();
 
-alertRouter.post(SERVER_ADDRESS + '/api/alerts/alert', jsonParser, function(req, res) {
+alertRouter.post('/alerts/alert', jsonParser, function(req, res) {
   var user = req.body.user;
   var contactsIds = user.contacts;
 

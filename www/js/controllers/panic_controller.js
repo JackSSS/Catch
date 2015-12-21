@@ -1,6 +1,7 @@
 module.exports = function(app) {
 
-  app.controller('PanicCtrl', ['$scope', '$http', '$ionicPopup', function($scope, $http, $ionicPopup) {
+  app.controller('PanicCtrl', ['$scope', '$http', '$ionicPopup',
+    function($scope, $http, $ionicPopup) {
     $scope.alert = {};
     $scope.contactId = '';
 
@@ -11,14 +12,27 @@ module.exports = function(app) {
           okType: 'button-dark'
         }).then(function(contact) {
 
+        $http.post(SERVER_ADDRESS + '/api/contacts/alert', {userId: $scope.currentUser.id, contactId: contact._id}),
+          function(err, res) {
 
-        $http.post('/api/contacts/alert', {userId: $scope.currentUser.id, contactId: contact._id})
-        }).then(function(err, res) {
+          var deviceIds = contacts.map(function(contact) {
+            return contact.deviceId;
+          });
 
-          if (err) return err;
+          request
+            .post('https://push.ionic.io/api/v1/push')
+            .set('Content-Type', 'application/json')
+            .set('X-Ionic-Application-Id', config.ionicAppId)
+            .auth(config.ionicApiKey)
+            .send({
+              tokens: deviceIds,
+              notification: {
+                alert: user.username + ' pushed the alert button!'
+              }
+            })
 
-        $scope.alert.push(res.body);
-      });
-     };
+          }
+        });
+      };
   }]);
 };

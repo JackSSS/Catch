@@ -12,7 +12,7 @@ Amongst other safety measures, this app may be used to check-in with a contact l
 
 + **Search** other users to add as contacts. _Contact request_ must be accepted.
 + **Check-in** with contacts. Contacts will receive check-in status from sender via push notification.
-+ **Alert Contacts** via push notification. Contacts will then be redirected to a map of senders immediate location.
++ **Alert Contacts** via push notification. Contacts will then be redirected to a map of sender's immediate location.
 
 
 ### Core Contributors

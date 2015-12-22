@@ -4,7 +4,7 @@
 ### Version
 0.4.0
 
-**NOT INTENDED AS A REPLACEMENT FOR DAILING 9-1-1. WHEN IN DANGER DAIL 9-1-1.**
+**NOT INTENDED AS A REPLACEMENT FOR DIALING 9-1-1. WHEN IN DANGER DIAL 9-1-1.**
 
 Amongst other safety measures, this app may be used to check-in with a contact list or alert the list when in danger.
 

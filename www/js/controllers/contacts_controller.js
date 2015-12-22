@@ -18,6 +18,14 @@ module.exports = function(app) {
       $location.path('/home/map/' + contact.alert.lat + '/' + contact.alert.lng);
     };
 
+    $scope.requestCheckIn = function(contact) {
+      $ionicPopup.alert({
+        title: 'C A T C H',
+        template: 'Requested Check-In from ' + contact.username,
+        okType: 'button-dark'
+      });
+    };
+
     $scope.clearSearch = function() {
       $scope.searchParam = '';
       $scope.searchResults = [];

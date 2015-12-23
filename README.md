@@ -2,7 +2,7 @@
 #### [Amber Alert Assistance]
 
 ### Version
-0.4.0
+0.4.0 (Alpha)
 
 **NOT INTENDED AS A REPLACEMENT FOR DIALING 9-1-1. WHEN IN DANGER DIAL 9-1-1.**
 

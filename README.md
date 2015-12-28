@@ -14,6 +14,9 @@ Amongst other safety measures, this app may be used to check-in with a contact l
 + **Check-in** with contacts. Contacts will receive check-in status from sender via push notification.
 + **Alert Contacts** via push notification. Contacts will then be redirected to a map of sender's immediate location.
 
+### Heroku
+
+A version of this app is available for viewing on Heroku: [https://murmuring-springs-5499.herokuapp.com](https://murmuring-springs-5499.herokuapp.com)
 
 ### Core Contributors
 
